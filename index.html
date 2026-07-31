@@ -39,11 +39,11 @@
 <nav id="nav">
   <a href="index.html" class="logo-wrap">
     <svg class="logo-anchor" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="4" r="3" stroke="currentColor" stroke-width="2.2" fill="none"/>
-      <line x1="3" y1="11" x2="29" y2="11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="16" y1="11" x2="16" y2="36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M16 36 C13 36 5 34 3 29 C3 26 5 25 7 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-      <path d="M16 36 C19 36 27 34 29 29 C29 26 27 25 25 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      <circle cx="16" cy="4.6" r="3.1" stroke="currentColor" stroke-width="2.2" fill="none"/>
+      <rect x="6.4" y="9.3" width="19.2" height="2.5" rx="1.25" fill="currentColor"/>
+      <rect x="14.7" y="7.2" width="2.6" height="28.2" rx="1.3" fill="currentColor"/>
+      <path d="M16 35.4 C11.6 35 6.2 32.6 4.4 27.6 L2.8 23.4 L7 25.4 C8.6 29.4 12.2 31.8 16 32.3 Z" fill="currentColor"/>
+      <path d="M16 35.4 C20.4 35 25.8 32.6 27.6 27.6 L29.2 23.4 L25 25.4 C23.4 29.4 19.8 31.8 16 32.3 Z" fill="currentColor"/>
     </svg>
     <span class="logo-word">ANCHOR<sup>®</sup></span>
   </a>
@@ -53,20 +53,17 @@
     <a href="#inside">Inside Every Stick</a>
   </div>
   <div class="nav-right">
-    <a href="shop.html" class="btn btn-gold btn-sm">Shop</a>
-    <button class="icon-btn" aria-label="Search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </button>
     <button class="icon-btn" aria-label="Cart">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     </button>
+    <a href="shop.html" class="btn btn-gold btn-sm">Shop</a>
   </div>
 </nav>
 
 <!-- HERO (dark — 8421 style) -->
 <section id="top" class="hero hero-dark">
   <div class="hero-copy">
-    <span class="eyebrow">For Every Peptide Journey</span>
+    <span class="eyebrow">Daily nutrition for a smaller appetite</span>
     <h1 class="hero-h1-dark">Hold<br><em>steady.</em></h1>
     <p class="hero-sub hero-sub-dark">Your appetite left. Your nutrient needs didn't. Anchor replaces what shrinking meals leave behind: electrolytes, amino acids, fiber, and 15+ micronutrients in three targeted formulas.</p>
     <a href="shop.html" class="btn btn-gold btn-lg hero-cta">Shop the System</a>
@@ -91,9 +88,8 @@
     <div class="shop-head">
       <div>
         <span class="eyebrow">The System</span>
-        <h2>Three Formulas.<br>One Anchor.</h2>
+        <h2>Three Formulas.</h2>
       </div>
-      <p class="shop-note">Buy what your body needs right now. Start with one formula. Add the others when you're ready.</p>
     </div>
     <div class="product-grid">
       <article class="product-card">
@@ -103,15 +99,16 @@
         </div>
         <div class="prod-body">
           <h3>GI Relief</h3>
-          <p>Ginger · Peppermint · Soluble Fiber · Electrolytes</p>
+          <p class="prod-sub" style="color:#6f8f76">Ginger · Peppermint · Soluble fiber</p>
           <ul class="prod-facts">
-            <li>Calms nausea and reflux</li>
-            <li>Relieves constipation</li>
-            <li>Replenishes electrolytes fast</li>
+            <li><span>Soluble fiber</span><b>5 g</b></li>
+            <li><span>Ginger root extract</span><b>500 mg</b></li>
+            <li><span>Peppermint leaf</span><b>200 mg</b></li>
+            <li><span>Electrolyte blend</span><b>720 mg</b></li>
           </ul>
           <div class="prod-price-row">
             <div><span class="price">$69.99</span><span class="price-unit">/30 sticks</span></div>
-            <a href="shop.html#gi-relief" class="btn btn-ink btn-sm">Shop Now</a>
+            <button type="button" class="btn btn-ink btn-sm add-btn" data-id="gi" data-name="GI Relief" data-price="69.99" data-img="images/stick-gi-relief.png" data-sub="30 sticks">Add</button>
           </div>
         </div>
       </article>
@@ -124,15 +121,16 @@
         </div>
         <div class="prod-body">
           <h3>Muscle Guard</h3>
-          <p>Whey Isolate · Full EAA · Creatine · Leucine</p>
+          <p class="prod-sub" style="color:#b4674a">Whey isolate · Full EAA · Creatine</p>
           <ul class="prod-facts">
-            <li>Protects lean muscle mass</li>
-            <li>All 9 essential amino acids</li>
-            <li>3g creatine monohydrate</li>
+            <li><span>Whey protein isolate</span><b>15 g</b></li>
+            <li><span>Essential amino acids</span><b>All 9</b></li>
+            <li><span>Creatine monohydrate</span><b>3 g</b></li>
+            <li><span>Leucine</span><b>2.5 g</b></li>
           </ul>
           <div class="prod-price-row">
             <div><span class="price">$69.99</span><span class="price-unit">/30 sticks</span></div>
-            <a href="shop.html#muscle-guard" class="btn btn-gold btn-sm">Shop Now</a>
+            <button type="button" class="btn btn-gold btn-sm add-btn" data-id="mg" data-name="Muscle Guard" data-price="69.99" data-img="images/stick-muscle-guard.png" data-sub="30 sticks">Add</button>
           </div>
         </div>
       </article>
@@ -144,15 +142,16 @@
         </div>
         <div class="prod-body">
           <h3>Complete</h3>
-          <p>15+ Vitamins · B12 · D3 · Full Electrolytes</p>
+          <p class="prod-sub" style="color:#42618c">15+ vitamins · Electrolytes · Daily floor</p>
           <ul class="prod-facts">
-            <li>Closes micronutrient gaps</li>
-            <li>500mcg B12 · 2000IU D3</li>
-            <li>Daily micronutrient floor</li>
+            <li><span>Vitamins & minerals</span><b>15+</b></li>
+            <li><span>Sodium blend</span><b>1000 mg</b></li>
+            <li><span>Vitamin B12</span><b>500 mcg</b></li>
+            <li><span>Vitamin D3</span><b>2000 IU</b></li>
           </ul>
           <div class="prod-price-row">
             <div><span class="price">$69.99</span><span class="price-unit">/30 sticks</span></div>
-            <a href="shop.html#complete" class="btn btn-ink btn-sm">Shop Now</a>
+            <button type="button" class="btn btn-ink btn-sm add-btn" data-id="cp" data-name="Complete" data-price="69.99" data-img="images/stick-navy.png" data-sub="30 sticks">Add</button>
           </div>
         </div>
       </article>
@@ -168,8 +167,6 @@
   <div class="stat-item"><strong>12K+</strong><span>peptide users anchored</span></div>
   <div class="stat-sep"></div>
   <div class="stat-item"><strong>$180</strong><span>saved vs. buying separate</span></div>
-  <div class="stat-sep"></div>
-  <div class="stat-item"><strong>3</strong><span>formulas. one system.</span></div>
 </div>
 
 <!-- PROBLEM / SCIENCE -->
@@ -177,9 +174,9 @@
   <div class="section-inner science-inner">
     <div class="sci-copy">
       <span class="eyebrow">The Gap</span>
-      <h2>Everything your appetite-suppressed body needs.</h2>
+      <h2>A smaller appetite<br>doesn't mean<br>smaller needs.</h2>
       <p class="sci-body">Peptides work by quieting your hunger signals. That is the point. The problem is that when you eat 40 to 60 percent less food, you also take in 40 to 60 percent less of everything your body runs on.</p>
-      <p class="sci-body">95% of people on peptide therapy supplement nothing. Anchor is for the other 5%.</p>
+      <p class="sci-body">Most people on this path supplement nothing. Anchor is built for the ones who'd rather not find out what that costs.</p>
       <div class="sci-badges">
         <span class="badge">Anchor Nutrient Technology™</span>
         <span class="badge">No artificial anything</span>
@@ -237,8 +234,8 @@
 <!-- IG REEL CAROUSEL (auto-scroll right to left, infinite loop) -->
 <section class="reel-section">
   <div class="reel-head">
-    <h2>As Seen in Your Feed.</h2>
-    <p>Real moments. Real results.</p>
+    <h2>Real People. Real Results.</h2>
+    <p>Over 2,000 peptide users trust Anchor daily</p>
   </div>
   <div class="reel-carousel-wrap">
     <div class="reel-carousel">
@@ -364,29 +361,6 @@
   </div>
 </section>
 
-<!-- REVIEWS CAROUSEL (infinite loop with arrows) -->
-<section class="section reviews-section">
-  <div class="section-inner">
-    <div class="reviews-head">
-      <h2>Real People, Real Results.</h2>
-      <p>Over 12,000 peptide users trust Anchor daily.</p>
-    </div>
-    <div class="reviews-viewport">
-      <div class="reviews-track" id="reviewsTrack">
-        <div class="review-card"><div class="review-photo"><span>SK</span></div><div class="review-body"><div class="review-stars">★★★★★</div><p>"The GI Relief stick is the only thing that made my first month manageable. Nausea basically gone by week two."</p><div class="review-meta"><strong>Sarah K.</strong><span class="rev-tag rev-sage">GI Relief</span></div></div></div>
-        <div class="review-card"><div class="review-photo"><span>MT</span></div><div class="review-body"><div class="review-stars">★★★★★</div><p>"Three months on Muscle Guard alongside my therapy and I actually gained 2lbs of lean mass. My trainer was shocked."</p><div class="review-meta"><strong>Marcus T.</strong><span class="rev-tag rev-terra">Muscle Guard</span></div></div></div>
-        <div class="review-card"><div class="review-photo"><span>JM</span></div><div class="review-body"><div class="review-stars">★★★★★</div><p>"My labs came back and my doctor was shocked. B12 and D3 both normal for the first time. She asked what I was doing differently."</p><div class="review-meta"><strong>Jennifer M.</strong><span class="rev-tag rev-navy">Complete</span></div></div></div>
-        <div class="review-card"><div class="review-photo"><span>DR</span></div><div class="review-body"><div class="review-stars">★★★★★</div><p>"I almost stopped because of the side effects. GI Relief saved me. Stomach settled, I kept going. Down 34 pounds."</p><div class="review-meta"><strong>Dana R.</strong><span class="rev-tag rev-sage">GI Relief</span></div></div></div>
-        <div class="review-card"><div class="review-photo"><span>TB</span></div><div class="review-body"><div class="review-stars">★★★★★</div><p>"Worth every penny. My strength held through the entire process. Friends who skipped supplements look completely different."</p><div class="review-meta"><strong>Tyler B.</strong><span class="rev-tag rev-terra">Muscle Guard</span></div></div></div>
-        <div class="review-card"><div class="review-photo"><span>AC</span></div><div class="review-body"><div class="review-stars">★★★★★</div><p>"One stick. 60 seconds. Done. I replaced four separate supplements and dropped $120 a month from my routine."</p><div class="review-meta"><strong>Adele C.</strong><span class="rev-tag rev-navy">Complete</span></div></div></div>
-      </div>
-    </div>
-    <div class="rev-nav">
-      <button class="rev-arrow" id="revPrev">←</button>
-      <button class="rev-arrow rev-arrow-fill" id="revNext">→</button>
-    </div>
-  </div>
-</section>
 
 <!-- SUBSCRIPTION / FULL ANCHOR -->
 <section class="section subscription-section">
@@ -441,11 +415,11 @@
       <div class="footer-brand">
         <a href="index.html" class="logo-wrap logo-wrap--footer">
           <svg class="logo-anchor" viewBox="0 0 32 40" fill="none">
-            <circle cx="16" cy="4" r="3" stroke="currentColor" stroke-width="2.2" fill="none"/>
-            <line x1="3" y1="11" x2="29" y2="11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-            <line x1="16" y1="11" x2="16" y2="36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M16 36 C13 36 5 34 3 29 C3 26 5 25 7 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-            <path d="M16 36 C19 36 27 34 29 29 C29 26 27 25 25 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <circle cx="16" cy="4.6" r="3.1" stroke="currentColor" stroke-width="2.2" fill="none"/>
+            <rect x="6.4" y="9.3" width="19.2" height="2.5" rx="1.25" fill="currentColor"/>
+            <rect x="14.7" y="7.2" width="2.6" height="28.2" rx="1.3" fill="currentColor"/>
+            <path d="M16 35.4 C11.6 35 6.2 32.6 4.4 27.6 L2.8 23.4 L7 25.4 C8.6 29.4 12.2 31.8 16 32.3 Z" fill="currentColor"/>
+            <path d="M16 35.4 C20.4 35 25.8 32.6 27.6 27.6 L29.2 23.4 L25 25.4 C23.4 29.4 19.8 31.8 16 32.3 Z" fill="currentColor"/>
           </svg>
           <span class="logo-word">ANCHOR<sup>®</sup></span>
         </a>
@@ -459,6 +433,19 @@
     <p class="footer-copy">© 2026 Anchor Nutrition, Inc.</p>
   </div>
 </footer>
+
+<div class="tweaks" id="tweaks">
+  <div class="tweaks-panel">
+    <p class="tweaks-title">Theme</p>
+    <div class="tweaks-seg" id="tweakTheme" role="radiogroup" aria-label="Theme">
+      <button type="button" role="radio" data-theme="dark" aria-checked="true">Dark</button>
+      <button type="button" role="radio" data-theme="light" aria-checked="false">Light</button>
+    </div>
+  </div>
+  <button class="tweaks-toggle" id="tweaksToggle" aria-label="Toggle tweaks">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.9 2.9M16.9 16.9l2.9 2.9M1 12h4M19 12h4M4.2 19.8l2.9-2.9M16.9 7.1l2.9-2.9"/></svg>
+  </button>
+</div>
 
 <script src="script.js"></script>
 </body>

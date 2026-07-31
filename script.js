@@ -106,3 +106,135 @@ if (reviewsTrack) {
   if (revNext) revNext.addEventListener('click', () => slideTo(idx + 1));
   if (revPrev) revPrev.addEventListener('click', () => slideTo(idx - 1));
 }
+
+/* ===== THEME TWEAK ===== */
+(function () {
+  const KEY = 'anchor-theme';
+  const THEMES = ['dark', 'light'];
+  let theme = THEMES.includes(localStorage.getItem(KEY)) ? localStorage.getItem(KEY) : 'dark';
+
+  const apply = (t) => {
+    document.body.classList.toggle('theme-light', t === 'light');
+  };
+  apply(theme);
+
+  const wrap = document.getElementById('tweaks');
+  if (!wrap) return;
+  const seg = document.getElementById('tweakTheme');
+  const sync = () => seg.querySelectorAll('button').forEach(b =>
+    b.setAttribute('aria-checked', String(b.dataset.theme === theme)));
+  sync();
+
+  document.getElementById('tweaksToggle').addEventListener('click', () => wrap.classList.toggle('is-open'));
+  seg.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-theme]');
+    if (!btn) return;
+    theme = btn.dataset.theme;
+    apply(theme);
+    sync();
+    localStorage.setItem(KEY, theme);
+  });
+})();
+
+
+/* ===== CART DRAWER ===== */
+(function () {
+  const KEY = 'anchor-cart';
+  const FREE_AT = 99;
+  let items = [];
+  try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { items = []; }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cart-overlay';
+  const drawer = document.createElement('aside');
+  drawer.className = 'cart-drawer';
+  drawer.setAttribute('aria-label', 'Shopping cart');
+  drawer.innerHTML = `
+    <div class="cart-head"><h3>Your Cart <span data-cart-n></span></h3><button class="cart-close" aria-label="Close cart">&times;</button></div>
+    <div class="cart-ship"><span data-ship-msg></span><div class="cart-ship-bar"><i data-ship-bar></i></div></div>
+    <div class="cart-items" data-cart-items></div>
+    <div class="cart-foot">
+      <div class="cart-sub-row"><span>Subtotal</span><b data-cart-total>$0.00</b></div>
+      <a href="#" class="btn btn-gold">Checkout</a>
+      <p>Shipping and taxes calculated at checkout.</p>
+    </div>`;
+  document.body.append(overlay, drawer);
+
+  const $items = drawer.querySelector('[data-cart-items]');
+  const $total = drawer.querySelector('[data-cart-total]');
+  const $n = drawer.querySelector('[data-cart-n]');
+  const $shipMsg = drawer.querySelector('[data-ship-msg]');
+  const $shipBar = drawer.querySelector('[data-ship-bar]');
+
+  const money = (v) => '$' + v.toFixed(2);
+  const count = () => items.reduce((s, i) => s + i.qty, 0);
+  const total = () => items.reduce((s, i) => s + i.qty * i.price, 0);
+
+  function open() { overlay.classList.add('is-open'); drawer.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+  function close() { overlay.classList.remove('is-open'); drawer.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+  function render() {
+    localStorage.setItem(KEY, JSON.stringify(items));
+    const n = count(), t = total();
+    $n.textContent = n ? '(' + n + ')' : '';
+    $total.textContent = money(t);
+    const remain = Math.max(0, FREE_AT - t);
+    $shipMsg.innerHTML = remain > 0 ? 'You\'re <b>' + money(remain) + '</b> away from free shipping' : '<b>Free shipping unlocked.</b>';
+    $shipBar.style.width = Math.min(100, (t / FREE_AT) * 100) + '%';
+
+    $items.innerHTML = items.length ? items.map(i => `
+      <div class="cart-line" data-line="${i.id}">
+        <img class="cart-line-img" src="${i.img}" alt="${i.name}">
+        <div>
+          <div class="cart-line-name">${i.name}</div>
+          <div class="cart-line-sub">${i.sub}</div>
+          <div class="cart-qty"><button data-step="-1" aria-label="Decrease">&minus;</button><span>${i.qty}</span><button data-step="1" aria-label="Increase">+</button></div>
+        </div>
+        <div class="cart-line-right">
+          <span class="cart-line-price">${money(i.qty * i.price)}</span>
+          <button class="cart-remove" data-remove>Remove</button>
+        </div>
+      </div>`).join('') : '<div class="cart-empty">Your cart is empty.</div>';
+
+    document.querySelectorAll('.icon-btn[aria-label="Cart"]').forEach(b => {
+      let badge = b.querySelector('.cart-count');
+      if (!n) { if (badge) badge.remove(); return; }
+      if (!badge) { badge = document.createElement('span'); badge.className = 'cart-count'; b.appendChild(badge); }
+      badge.textContent = n;
+    });
+  }
+
+  function add(data, qty) {
+    const found = items.find(i => i.id === data.id);
+    if (found) found.qty += qty;
+    else items.push({ id: data.id, name: data.name, price: parseFloat(data.price), img: data.img, sub: data.sub, qty });
+    render(); open();
+  }
+
+  document.addEventListener('click', (e) => {
+    const addBtn = e.target.closest('.add-btn[data-id]');
+    if (addBtn) {
+      e.preventDefault();
+      const qEl = addBtn.dataset.qty && document.getElementById(addBtn.dataset.qty);
+      add(addBtn.dataset, qEl ? parseInt(qEl.textContent, 10) || 1 : 1);
+      return;
+    }
+    if (e.target.closest('.icon-btn[aria-label="Cart"]')) { e.preventDefault(); render(); open(); return; }
+    if (e.target === overlay || e.target.closest('.cart-close')) { close(); return; }
+
+    const line = e.target.closest('.cart-line');
+    if (!line) return;
+    const item = items.find(i => i.id === line.dataset.line);
+    if (!item) return;
+    if (e.target.closest('[data-remove]')) { items = items.filter(i => i !== item); render(); return; }
+    const step = e.target.closest('[data-step]');
+    if (step) {
+      item.qty += parseInt(step.dataset.step, 10);
+      if (item.qty < 1) items = items.filter(i => i !== item);
+      render();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  render();
+})();
