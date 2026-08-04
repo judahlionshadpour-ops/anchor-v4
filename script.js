@@ -155,7 +155,7 @@ if (reviewsTrack) {
     <div class="cart-items" data-cart-items></div>
     <div class="cart-foot">
       <div class="cart-sub-row"><span>Subtotal</span><b data-cart-total>$0.00</b></div>
-      <a href="#" class="btn btn-gold">Checkout</a>
+      <button type="button" class="btn btn-gold" data-checkout>Checkout</button>
       <p>Shipping and taxes calculated at checkout.</p>
     </div>`;
   document.body.append(overlay, drawer);
@@ -165,6 +165,7 @@ if (reviewsTrack) {
   const $n = drawer.querySelector('[data-cart-n]');
   const $shipMsg = drawer.querySelector('[data-ship-msg]');
   const $shipBar = drawer.querySelector('[data-ship-bar]');
+  const $checkout = drawer.querySelector('[data-checkout]');
 
   const money = (v) => '$' + v.toFixed(2);
   const count = () => items.reduce((s, i) => s + i.qty, 0);
@@ -204,6 +205,27 @@ if (reviewsTrack) {
     });
   }
 
+  async function checkout() {
+    if (!items.length || $checkout.disabled) return;
+    $checkout.disabled = true;
+    const originalText = $checkout.textContent;
+    $checkout.textContent = 'Redirecting…';
+    try {
+      const res = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items.map((i) => ({ id: i.id, qty: i.qty })) }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || 'Checkout failed');
+      window.location.href = data.url;
+    } catch (err) {
+      alert(err.message || 'Something went wrong starting checkout. Please try again.');
+      $checkout.disabled = false;
+      $checkout.textContent = originalText;
+    }
+  }
+
   function add(data, qty) {
     const found = items.find(i => i.id === data.id);
     if (found) found.qty += qty;
@@ -221,6 +243,7 @@ if (reviewsTrack) {
     }
     if (e.target.closest('.icon-btn[aria-label="Cart"]')) { e.preventDefault(); render(); open(); return; }
     if (e.target === overlay || e.target.closest('.cart-close')) { close(); return; }
+    if (e.target.closest('[data-checkout]')) { checkout(); return; }
 
     const line = e.target.closest('.cart-line');
     if (!line) return;

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed | ANCHOR® Nutrition System</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.order-status-section {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem clamp(1.5rem, 5vw, 4rem);
+  background: var(--cream);
+}
+.order-status-card {
+  max-width: 520px;
+  text-align: center;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+}
+.order-status-icon { width: 56px; height: 56px; margin: 0 auto 1.2rem; color: var(--sage); }
+.order-status-card h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .6rem; }
+.order-status-card p { font-family: -apple-system, sans-serif; font-size: .92rem; }
+.order-status-ref { font-family: -apple-system, sans-serif; font-size: .78rem; color: var(--muted); margin-top: 1.2rem; word-break: break-all; }
+.order-status-card .btn { margin-top: 1.6rem; }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="logo-wrap">
+    <svg class="logo-anchor" viewBox="0 0 32 40" fill="none">
+      <circle cx="16" cy="4" r="3" stroke="currentColor" stroke-width="2.2" fill="none"/>
+      <line x1="3" y1="11" x2="29" y2="11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="16" y1="11" x2="16" y2="36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M16 36 C13 36 5 34 3 29 C3 26 5 25 7 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      <path d="M16 36 C19 36 27 34 29 29 C29 26 27 25 25 26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="logo-word">ANCHOR<sup>®</sup></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#shop">The System</a>
+    <a href="index.html#science">Science</a>
+    <a href="index.html#inside">Inside Every Stick</a>
+  </div>
+  <div class="nav-right">
+    <a href="index.html#shop" class="btn btn-gold btn-sm">Shop</a>
+  </div>
+</nav>
+
+<section class="order-status-section">
+  <div class="order-status-card">
+    <svg class="order-status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M8 12.5l2.5 2.5L16 9" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="eyebrow" style="color:var(--sage)">Order Confirmed</span>
+    <h1>You're anchored.</h1>
+    <p>Your order is in. A confirmation email is on its way with your receipt and tracking details once it ships.</p>
+    <p id="orderRef" class="order-status-ref"></p>
+    <a href="index.html" class="btn btn-gold btn-lg">Back to ANCHOR</a>
+  </div>
+</section>
+
+<script>
+  // Clear the local cart now that checkout completed.
+  try { localStorage.removeItem('anchor-cart'); } catch (e) {}
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  if (sessionId) {
+    document.getElementById('orderRef').textContent = 'Reference: ' + sessionId;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "anchor-v4",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node dev-server.js",
+    "dev:vercel": "vercel dev"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "stripe": "^17.4.0"
+  },
+  "devDependencies": {
+    "vercel": "^37.14.0"
+  }
+}
