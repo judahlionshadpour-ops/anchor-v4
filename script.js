@@ -141,6 +141,13 @@ if (reviewsTrack) {
 (function () {
   const KEY = 'anchor-cart';
   const FREE_AT = 99;
+  const PAYMENT_LINKS = {
+    'gi': 'https://buy.stripe.com/test_dRmfZ99kmdkMfNZdM9dQQ00',
+    'mg': 'https://buy.stripe.com/test_eVq8wHfIK0y07hteQddQQ01',
+    'cp': 'https://buy.stripe.com/test_aFaeV5546fsU31d6jHdQQ02',
+    'bundle-once': 'https://buy.stripe.com/test_7sYeV5dACfsUbxJazXdQQ03',
+    'bundle-sub': 'https://buy.stripe.com/test_aFa3cn2VYgwY7ht8rPdQQ04',
+  };
   let items = [];
   try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { items = []; }
 
@@ -155,7 +162,7 @@ if (reviewsTrack) {
     <div class="cart-items" data-cart-items></div>
     <div class="cart-foot">
       <div class="cart-sub-row"><span>Subtotal</span><b data-cart-total>$0.00</b></div>
-      <a href="#" class="btn btn-gold">Checkout</a>
+      <button type="button" class="btn btn-gold" data-checkout>Checkout</button>
       <p>Shipping and taxes calculated at checkout.</p>
     </div>`;
   document.body.append(overlay, drawer);
@@ -204,6 +211,18 @@ if (reviewsTrack) {
     });
   }
 
+  function checkout() {
+    if (!items.length) return;
+    const distinctIds = [...new Set(items.map((i) => i.id))];
+    if (distinctIds.length > 1) {
+      alert('Right now checkout can only handle one formula at a time. Please remove the other item(s) from your cart, or check out separately for each.');
+      return;
+    }
+    const link = PAYMENT_LINKS[distinctIds[0]];
+    if (!link) return;
+    window.location.href = link;
+  }
+
   function add(data, qty) {
     const found = items.find(i => i.id === data.id);
     if (found) found.qty += qty;
@@ -221,6 +240,7 @@ if (reviewsTrack) {
     }
     if (e.target.closest('.icon-btn[aria-label="Cart"]')) { e.preventDefault(); render(); open(); return; }
     if (e.target === overlay || e.target.closest('.cart-close')) { close(); return; }
+    if (e.target.closest('[data-checkout]')) { checkout(); return; }
 
     const line = e.target.closest('.cart-line');
     if (!line) return;
