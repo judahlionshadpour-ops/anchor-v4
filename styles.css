@@ -384,8 +384,7 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 }
 .protocol-tab:last-child { border-right: none; }
 .protocol-tab:hover { background: rgba(0,0,0,.02); }
-.protocol-tab-label { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
-.protocol-tab-range { font-family: Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); }
+.protocol-tab-range { font-family: Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--accent, var(--ink)); }
 .protocol-tab-state { font-size: .82rem; color: var(--muted); }
 .protocol-tab.active { background: var(--ink); }
 .protocol-tab.active .protocol-tab-range { color: #fff; }
@@ -410,15 +409,10 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: .3rem 1rem;
-  background: var(--cream);
-  border-left: 3px solid var(--accent);
-  border-radius: 6px;
-  padding: 1.2rem 1.5rem;
+  gap: 1rem 1.5rem;
 }
-.protocol-recommend-label { font-family: -apple-system, sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); width: 100%; }
-.protocol-recommend-name { font-family: Georgia, serif; font-weight: 700; font-size: 1.05rem; }
-.protocol-recommend a { font-family: -apple-system, sans-serif; font-size: .85rem; font-weight: 700; color: var(--ink); text-decoration: underline; }
+.protocol-recommend .btn { flex-shrink: 0; }
+.protocol-recommend a { font-family: -apple-system, sans-serif; font-size: .85rem; font-weight: 700; color: var(--muted); text-decoration: underline; }
 
 .protocol-visual {
   position: relative;
