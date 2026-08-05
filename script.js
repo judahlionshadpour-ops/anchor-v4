@@ -221,12 +221,6 @@ if (reviewsTrack) {
 
   function checkout() {
     if (!items.length) return;
-    const recurring = items.filter((i) => i.id === 'bundle-sub');
-    const oneTime = items.filter((i) => i.id !== 'bundle-sub');
-    if (recurring.length && oneTime.length) {
-      alert("The monthly bundle subscription can't be checked out together with one-time items — Stripe requires those in separate orders. Please check out the subscription separately.");
-      return;
-    }
     const base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
     fetch(CHECKOUT_ENDPOINT, {
       method: 'POST',

@@ -45,11 +45,6 @@ export default {
     }
 
     const recurring = items.filter((i) => i.id === 'bundle-sub');
-    const oneTime = items.filter((i) => i.id !== 'bundle-sub');
-    if (recurring.length && oneTime.length) {
-      return new Response(JSON.stringify({ error: "The monthly bundle subscription can't be checked out with one-time items. Check out the subscription separately." }), { status: 400, headers });
-    }
-
     const mode = recurring.length ? 'subscription' : 'payment';
     const base = body.baseUrl;
     if (!base || !ALLOWED_ORIGINS.some((o) => base.startsWith(o))) {
