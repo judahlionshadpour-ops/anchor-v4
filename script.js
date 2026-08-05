@@ -155,13 +155,7 @@ if (reviewsTrack) {
 (function () {
   const KEY = 'anchor-cart';
   const FREE_AT = 99;
-  const PAYMENT_LINKS = {
-    'gi': 'https://buy.stripe.com/test_dRmfZ99kmdkMfNZdM9dQQ00',
-    'mg': 'https://buy.stripe.com/test_eVq8wHfIK0y07hteQddQQ01',
-    'cp': 'https://buy.stripe.com/test_aFaeV5546fsU31d6jHdQQ02',
-    'bundle-once': 'https://buy.stripe.com/test_7sYeV5dACfsUbxJazXdQQ03',
-    'bundle-sub': 'https://buy.stripe.com/test_aFa3cn2VYgwY7ht8rPdQQ04',
-  };
+  const CHECKOUT_ENDPOINT = 'https://anchor-checkout.judahswebsites.workers.dev';
   let items = [];
   try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { items = []; }
 
@@ -227,14 +221,27 @@ if (reviewsTrack) {
 
   function checkout() {
     if (!items.length) return;
-    const distinctIds = [...new Set(items.map((i) => i.id))];
-    if (distinctIds.length > 1) {
-      alert('Right now checkout can only handle one formula at a time. Please remove the other item(s) from your cart, or check out separately for each.');
+    const recurring = items.filter((i) => i.id === 'bundle-sub');
+    const oneTime = items.filter((i) => i.id !== 'bundle-sub');
+    if (recurring.length && oneTime.length) {
+      alert("The monthly bundle subscription can't be checked out together with one-time items — Stripe requires those in separate orders. Please check out the subscription separately.");
       return;
     }
-    const link = PAYMENT_LINKS[distinctIds[0]];
-    if (!link) return;
-    window.location.href = link;
+    const base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+    fetch(CHECKOUT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: items.map((i) => ({ id: i.id, qty: i.qty })),
+        baseUrl: base,
+      }),
+    }).then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (!ok || data.error) { alert(data.error || 'Checkout failed.'); return; }
+        window.location.href = data.url;
+      }).catch((err) => {
+        alert(err.message);
+      });
   }
 
   function add(data, qty) {
