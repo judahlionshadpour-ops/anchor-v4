@@ -398,21 +398,37 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 .protocol-panel p { font-family: -apple-system, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
 .protocol-list { list-style: none; margin-bottom: 2rem; }
 .protocol-list li {
+  position: relative;
   font-family: -apple-system, sans-serif;
   font-size: .92rem;
   color: var(--ink);
-  padding: .8rem 0;
+  padding: .8rem 0 .8rem 1.3rem;
   border-top: 1px solid var(--border);
+}
+.protocol-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.15rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent, var(--gold));
 }
 .protocol-list li:last-child { border-bottom: 1px solid var(--border); }
 .protocol-recommend {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem 1.5rem;
+  gap: .5rem 1.2rem;
+  background: var(--cream);
+  border-left: 3px solid var(--accent, var(--gold));
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
 }
-.protocol-recommend .btn { flex-shrink: 0; }
-.protocol-recommend a { font-family: -apple-system, sans-serif; font-size: .85rem; font-weight: 700; color: var(--muted); text-decoration: underline; }
+.protocol-recommend-label { font-family: -apple-system, sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); width: 100%; }
+.protocol-recommend .btn { flex-shrink: 0; padding: .5rem 1.4rem; }
+.protocol-recommend a { font-family: -apple-system, sans-serif; font-size: .85rem; font-weight: 700; color: var(--ink); text-decoration: underline; }
 
 .protocol-visual {
   position: relative;
