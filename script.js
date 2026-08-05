@@ -1,3 +1,17 @@
+/* ===== PROTOCOL TABS ===== */
+(function () {
+  const wrap = document.getElementById('protocolTabs');
+  if (!wrap) return;
+  wrap.addEventListener('click', (e) => {
+    const tab = e.target.closest('.protocol-tab');
+    if (!tab) return;
+    const phase = tab.dataset.phase;
+    document.querySelectorAll('.protocol-tab').forEach(t => t.classList.toggle('active', t === tab));
+    document.querySelectorAll('.protocol-panel').forEach(p => p.classList.toggle('active', p.dataset.phase === phase));
+    document.querySelectorAll('[data-phase-img]').forEach(img => img.classList.toggle('active', img.dataset.phaseImg === phase));
+  });
+})();
+
 /* ===== NAV SHADOW ===== */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {

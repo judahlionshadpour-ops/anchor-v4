@@ -196,36 +196,86 @@
   </div>
 </section>
 
-<!-- INSIDE EVERY STICK (dark accordion — matches image) -->
-<section id="inside" class="inside-dark">
-  <div class="inside-dark-inner">
-    <div class="inside-dark-left">
-      <div class="inside-img-wrap">
-        <img src="images/ingredients.png" alt="Anchor ingredients">
-        <span class="inside-badge">Third-party tested · every lot</span>
-      </div>
+<!-- INSIDE EVERY STICK (three-phase protocol tabs) -->
+<section id="inside" class="section protocol-section">
+  <div class="section-inner">
+    <div class="protocol-head">
+      <span class="eyebrow">The Protocol</span>
+      <h2>Three phases. Three needs.</h2>
+      <p class="protocol-sub">Click a phase to see what your body is actually short on — and which formula covers it.</p>
     </div>
-    <div class="inside-dark-right">
-      <span class="eyebrow">Inside Every Stick</span>
-      <h2 class="inside-dark-h2">No fillers.<br>No sugar crash.<br>No guessing.</h2>
-      <p class="inside-dark-sub">Each formula targets what the clinical literature flags as most at-risk on peptide therapy: electrolyte balance, lean mass, GI comfort, and micronutrient sufficiency.</p>
-      <div class="accordion" id="accordion">
-        <div class="acc-item open">
-          <button class="acc-q">Electrolyte balance <span class="acc-icon">×</span></button>
-          <div class="acc-a">Reduced food intake means reduced sodium and potassium intake. Anchor loads 1000mg sodium alongside potassium and magnesium to hold hydration and blood pressure steady.</div>
+
+    <div class="protocol-tabs" id="protocolTabs">
+      <button class="protocol-tab active" data-phase="1">
+        <span class="protocol-tab-label">Phase 01</span>
+        <span class="protocol-tab-range">Weeks 1–8</span>
+        <span class="protocol-tab-state">Adjusting</span>
+      </button>
+      <button class="protocol-tab" data-phase="2">
+        <span class="protocol-tab-label">Phase 02</span>
+        <span class="protocol-tab-range">Months 3–6</span>
+        <span class="protocol-tab-state">Losing fast</span>
+      </button>
+      <button class="protocol-tab" data-phase="3">
+        <span class="protocol-tab-label">Phase 03</span>
+        <span class="protocol-tab-range">Month 6+</span>
+        <span class="protocol-tab-state">Maintaining</span>
+      </button>
+    </div>
+
+    <div class="protocol-body">
+      <div class="protocol-panel active" data-phase="1" style="--accent:#6f8f76">
+        <span class="protocol-panel-eyebrow">Adjusting · Weeks 1–8</span>
+        <h3>Nausea runs the show.</h3>
+        <p>Slowed gastric emptying makes food feel impossible. Most people under-hydrate and under-eat electrolytes badly here — which makes the nausea and fatigue worse in a loop.</p>
+        <ul class="protocol-list">
+          <li>Nausea, reflux, early fullness</li>
+          <li>Constipation from slowed motility</li>
+          <li>Sodium &amp; potassium falling fast</li>
+        </ul>
+        <div class="protocol-recommend">
+          <span class="protocol-recommend-label">Recommended</span>
+          <span class="protocol-recommend-name">Anchor GI Relief</span>
+          <a href="#gi-relief">See formula →</a>
         </div>
-        <div class="acc-item">
-          <button class="acc-q">Lean muscle preservation <span class="acc-icon">+</span></button>
-          <div class="acc-a">Rapid weight loss on peptides puts lean mass at serious risk. Anchor Muscle Guard delivers 15g whey isolate, all 9 EAAs, and 3g creatine to protect what you're building.</div>
+      </div>
+
+      <div class="protocol-panel" data-phase="2" style="--accent:#b4674a">
+        <span class="protocol-panel-eyebrow">Losing Fast · Months 3–6</span>
+        <h3>The scale drops. So does muscle.</h3>
+        <p>This is the phase that decides how you look and feel at the end. Without adequate protein and amino intake, a large share of the loss comes from lean tissue you won't get back easily.</p>
+        <ul class="protocol-list">
+          <li>Strength and stamina falling off</li>
+          <li>Protein intake far under target</li>
+          <li>Lean mass loss alongside fat loss</li>
+        </ul>
+        <div class="protocol-recommend">
+          <span class="protocol-recommend-label">Recommended</span>
+          <span class="protocol-recommend-name">Anchor Muscle Guard</span>
+          <a href="#muscle-guard">See formula →</a>
         </div>
-        <div class="acc-item">
-          <button class="acc-q">GI comfort <span class="acc-icon">+</span></button>
-          <div class="acc-a">Slowed gastric emptying causes nausea, reflux, and constipation in most users. GI Relief uses clinically-dosed ginger root, peppermint, and 5g soluble fiber to restore comfort.</div>
+      </div>
+
+      <div class="protocol-panel" data-phase="3" style="--accent:#42618c">
+        <span class="protocol-panel-eyebrow">Maintaining · Month 6+</span>
+        <h3>Stable on the scale. Still short on nutrients.</h3>
+        <p>Once weight levels off, it's easy to assume the hard part is over. It isn't — months of reduced intake have quietly drained B12, D3, and other essentials your body still runs on daily.</p>
+        <ul class="protocol-list">
+          <li>Micronutrient gaps built up over months</li>
+          <li>Easy to get complacent once weight stabilizes</li>
+          <li>Daily floor still matters long after the loss</li>
+        </ul>
+        <div class="protocol-recommend">
+          <span class="protocol-recommend-label">Recommended</span>
+          <span class="protocol-recommend-name">Anchor Complete</span>
+          <a href="#complete">See formula →</a>
         </div>
-        <div class="acc-item">
-          <button class="acc-q">Micronutrient sufficiency <span class="acc-icon">+</span></button>
-          <div class="acc-a">Months of reduced intake silently deplete B12, D3, iron, zinc, and magnesium. Anchor Complete covers 15+ vitamins and minerals. Your daily floor when food can't be.</div>
-        </div>
+      </div>
+
+      <div class="protocol-visual">
+        <img data-phase-img="1" src="images/stick-gi-relief.png" alt="Anchor GI Relief" class="active">
+        <img data-phase-img="2" src="images/stick-muscle-guard.png" alt="Anchor Muscle Guard">
+        <img data-phase-img="3" src="images/stick-navy.png" alt="Anchor Complete">
       </div>
     </div>
   </div>
