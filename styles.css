@@ -627,8 +627,11 @@ body.theme-light .protocol-section { background: #fff; }
   text-align: center;
   padding: 5rem clamp(1.5rem, 5vw, 4rem);
 }
-.cta-inner { max-width: 700px; margin: 0 auto; }
-.cta-band h2 { color: #fff; font-size: clamp(1.6rem, 3vw, 2.5rem); margin-bottom: 2rem; }
+.cta-inner { max-width: 960px; margin: 0 auto; }
+.cta-band h2 { color: #fff; font-size: clamp(1.1rem, 1.9vw, 1.55rem); margin-bottom: 2rem; white-space: nowrap; }
+@media (max-width: 760px) {
+  .cta-band h2 { white-space: normal; }
+}
 .cta-band .btn-gold { background: #fff; color: var(--gold); border-color: #fff; }
 .cta-band .btn-gold:hover { background: rgba(255,255,255,.9); }
 .cta-disc { font-family: -apple-system, sans-serif; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-top: 1.2rem; }
