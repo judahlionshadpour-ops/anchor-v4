@@ -1,9 +1,9 @@
 const PRICE_IDS = {
-  'gi': 'price_1U18IDP9xRSWM27taeHn4v63',
-  'mg': 'price_1U18IEP9xRSWM27tgTqpMLOj',
-  'cp': 'price_1U18IEP9xRSWM27tTYeOa58Q',
-  'bundle-once': 'price_1U18IFP9xRSWM27tk2x3ce3s',
-  'bundle-sub': 'price_1U18IFP9xRSWM27tecgQefoO',
+  'gi': 'price_1U1uzAP9xRSWM27tRI5UmsOT',
+  'mg': 'price_1U1uzBP9xRSWM27tPDa7aVSN',
+  'cp': 'price_1U1uzCP9xRSWM27tr3MnkyN8',
+  'bundle-once': 'price_1U1uzDP9xRSWM27tiBJaiFv6',
+  'bundle-sub': 'price_1U1uzBP9xRSWM27tP3E6nvG9',
 };
 
 const ALLOWED_ORIGINS = [
@@ -55,6 +55,7 @@ export default {
     params.set('mode', mode);
     params.set('success_url', base + 'index.html?checkout=success');
     params.set('cancel_url', base + 'index.html?checkout=cancelled');
+    params.set('shipping_address_collection[allowed_countries][0]', 'US');
     if (env.STRIPE_AUTOMATIC_TAX === 'true') {
       params.set('automatic_tax[enabled]', 'true');
     }
