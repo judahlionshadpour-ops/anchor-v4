@@ -679,24 +679,12 @@ body.theme-light .protocol-section { background: #fff; }
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .first-screen { height: auto; }
-  .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; flex: none; overflow: visible; padding-top: 3rem; }
-  .hero-copy { order: 1; }
-  .hero-visual { order: 2; }
-  .hero-trust { justify-content: center; }
-  .hero-sub { margin: 0 auto 2rem; }
-  .science-inner { grid-template-columns: 1fr; }
-  .product-grid { grid-template-columns: 1fr 1fr; }
-  .footer-cols { grid-template-columns: 1fr 1fr; }
-  .sub-card { grid-template-columns: 1fr; gap: 2rem; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 }
 @media (max-width: 600px) {
   .stat-sep { display: none; }
-  .stats-bar { gap: 1.5rem; }
-  .footer-cols { grid-template-columns: 1fr; }
-  .inside-grid { grid-template-columns: 1fr; }
-  .product-grid { grid-template-columns: 1fr; }
+  .stats-bar { gap: .8rem; }
 }
 
 /* ===== LIGHT THEME (tweakable) ===== */
