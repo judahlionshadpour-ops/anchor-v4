@@ -111,7 +111,7 @@ nav {
 h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 
 /* ===== FIRST SCREEN (marquee + nav + hero, flush to viewport) ===== */
-.first-screen { display: flex; flex-direction: column; height: 100vh; }
+.first-screen { display: flex; flex-direction: column; height: 100vh; max-height: 800px; }
 
 /* ===== HERO (dark) ===== */
 .hero {
