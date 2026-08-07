@@ -53,6 +53,27 @@ nav {
 .nav-links a:hover { color: #fff; }
 .nav-right { display: flex; align-items: center; gap: .8rem; }
 .icon-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,.7); padding: .3rem; display: flex; align-items: center; }
+.nav-hamburger { display: none; }
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  background: #131920;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: .5rem clamp(1.5rem, 4vw, 3rem) 1rem;
+}
+.mobile-nav a {
+  font-family: -apple-system, sans-serif;
+  font-size: .95rem;
+  color: rgba(255,255,255,.75);
+  padding: .9rem 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.mobile-nav a:first-child { border-top: none; }
+.mobile-nav.is-open { display: flex; }
 
 /* ===== BUTTONS ===== */
 .btn {
@@ -668,6 +689,7 @@ body.theme-light .protocol-section { background: #fff; }
   .footer-cols { grid-template-columns: 1fr 1fr; }
   .sub-card { grid-template-columns: 1fr; gap: 2rem; }
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
 }
 @media (max-width: 600px) {
   .stat-sep { display: none; }

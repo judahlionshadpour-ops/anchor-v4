@@ -273,3 +273,21 @@ if (reviewsTrack) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   render();
 })();
+
+/* ===== MOBILE NAV ===== */
+(function () {
+  const btn = document.getElementById('navHamburger');
+  const menu = document.getElementById('mobileNav');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+  }));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { menu.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+  });
+})();
