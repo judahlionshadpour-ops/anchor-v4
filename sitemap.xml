@@ -16,6 +16,51 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://youranchor.co/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/faq.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/protein-intake-on-semaglutide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/muscle-loss-on-glp1.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/electrolytes-on-glp1.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/glp1-nausea-remedies.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/vitamins-on-reduced-appetite.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://youranchor.co/blog/creatine-on-semaglutide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://youranchor.co/contact.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

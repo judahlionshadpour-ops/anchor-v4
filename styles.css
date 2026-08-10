@@ -689,8 +689,8 @@ body.theme-light .protocol-section { background: #fff; }
     padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 2.5rem);
   }
   .hero-visual-dark { justify-content: center; }
-  .hero-duo { max-width: 480px; margin: 0 auto; }
-  .hero-inset-photo { bottom: -1rem; left: -1rem; }
+  .hero-duo { max-width: 480px; margin: 0 auto; aspect-ratio: 4/3; }
+  .hero-inset-photo { bottom: -1rem; left: 0.5rem; }
 
   /* Product grid 2-col */
   .product-grid { grid-template-columns: repeat(2, 1fr); }
@@ -710,6 +710,9 @@ body.theme-light .protocol-section { background: #fff; }
   .sub-right { text-align: left; }
   .sub-price-display { justify-content: flex-start; }
   .sub-right .btn { width: auto; display: inline-flex; }
+
+  /* Stats bar tighter on tablet */
+  .stat-item { padding: 0 1.2rem; }
 
   /* Footer 2-col */
   .footer-cols { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
