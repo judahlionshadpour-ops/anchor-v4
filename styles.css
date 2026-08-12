@@ -820,7 +820,7 @@ body.theme-light .protocol-section { background: #fff; }
   }
   .product-grid::-webkit-scrollbar { display: none; }
   .product-card {
-    flex: 0 0 84vw;
+    flex: 0 0 92vw;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
@@ -886,8 +886,8 @@ body.theme-light .protocol-section { background: #fff; }
 
   /* ---- Product cards: compact for carousel ---- */
   .prod-phase { font-size: .57rem; padding: .27rem .6rem; }
-  .prod-img-wrap { aspect-ratio: 16/9; }
-  .prod-img-wrap img { object-fit: contain; }
+  .prod-img-wrap { aspect-ratio: 4/3; }
+  .prod-img-wrap img { object-fit: cover; object-position: center 20%; }
   .prod-body { padding: .65rem .85rem .8rem; }
   .prod-body h3 { font-size: .9rem; margin-bottom: .08rem; }
   .prod-sub { font-size: .68rem; margin-bottom: .28rem; }
