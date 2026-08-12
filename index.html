@@ -309,7 +309,31 @@
           </div>
         </div>
       </article>
+
+      <!-- Bundle card — mobile carousel only -->
+      <article class="product-card product-card--bundle-m" style="border-color:var(--gold)">
+        <div class="prod-phase" style="background:var(--gold)">SYSTEM BUNDLE</div>
+        <div class="best-seller-tag">Best Value</div>
+        <div class="prod-img-wrap">
+          <img src="images/sticks.png" alt="Anchor Full System Bundle">
+        </div>
+        <div class="prod-body">
+          <h3>Full System</h3>
+          <p class="prod-sub" style="color:var(--gold)">GI Relief · Muscle Guard · Complete</p>
+          <ul class="prod-facts">
+            <li><span>Total sticks</span><b>90 sticks</b></li>
+            <li><span>Subscribe & save</span><b>$119.99</b></li>
+            <li><span>One-time</span><b>$149.99</b></li>
+            <li><span>Savings vs. separate</span><b>Save $60</b></li>
+          </ul>
+          <div class="prod-price-row">
+            <div><span class="price">$119.99</span><span class="price-unit">/mo</span></div>
+            <a href="#bundle" class="btn btn-gold btn-sm">View Bundle</a>
+          </div>
+        </div>
+      </article>
     </div>
+    <div class="carousel-dots" id="carouselDots"></div>
     <a href="#bundle" class="btn btn-outline-gold btn-full">View All + Bundle</a>
   </div>
 </section>
@@ -640,5 +664,50 @@
 </div>
 
 <script src="script.js?v=5"></script>
+<script>
+(function(){
+  var grid = document.querySelector('.product-grid');
+  var wrap = document.getElementById('carouselDots');
+  if (!grid || !wrap) return;
+  var dots = [];
+
+  function buildDots() {
+    if (window.innerWidth > 600) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'flex';
+    var cards = grid.querySelectorAll('.product-card');
+    wrap.innerHTML = '';
+    dots = [];
+    cards.forEach(function(_, i) {
+      var d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to product ' + (i + 1));
+      d.addEventListener('click', function() {
+        var c = grid.querySelectorAll('.product-card')[i];
+        if (c) c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      });
+      wrap.appendChild(d);
+      dots.push(d);
+    });
+  }
+
+  function updateDots() {
+    if (window.innerWidth > 600) return;
+    var cards = Array.from(grid.querySelectorAll('.product-card'));
+    if (!cards.length) return;
+    var center = grid.scrollLeft + grid.offsetWidth / 2;
+    var idx = 0;
+    var minDist = Infinity;
+    cards.forEach(function(c, i) {
+      var dist = Math.abs(c.offsetLeft + c.offsetWidth / 2 - center);
+      if (dist < minDist) { minDist = dist; idx = i; }
+    });
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  }
+
+  buildDots();
+  grid.addEventListener('scroll', updateDots, { passive: true });
+  window.addEventListener('resize', buildDots);
+})();
+</script>
 </body>
 </html>
