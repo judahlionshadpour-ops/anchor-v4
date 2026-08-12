@@ -924,9 +924,10 @@ body.theme-light .protocol-section { background: #fff; }
   .protocol-visual {
     display: flex !important; order: -1;
     height: 130px; border-radius: 12px; overflow: hidden;
-    margin-bottom: .75rem; aspect-ratio: unset;
+    margin-top: .6rem; margin-bottom: .75rem; aspect-ratio: unset;
   }
-  .protocol-visual img { object-fit: contain; background: var(--cream); }
+  .protocol-visual img { object-fit: cover; }
+  .protocol-panel-eyebrow { display: none; }
   .protocol-panel { padding: .4rem 0 0; }
   .protocol-panel h3 { font-size: .95rem; margin-bottom: .4rem; line-height: 1.25; }
   .protocol-panel p { font-size: .78rem; margin-bottom: .5rem; }
