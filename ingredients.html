@@ -59,6 +59,33 @@
   ]
 }
 </script>
+<!-- Analytics: GA4 + Microsoft Clarity (async/deferred, non-blocking) -->
+<script>
+(function(){
+  // Load GA4 after page load to avoid blocking render
+  function loadGA4(){
+    var s=document.createElement('script');
+    s.src='https://www.googletagmanager.com/gtag/js?id=G-ESMQYBY4F4';
+    s.async=true;
+    document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config','G-ESMQYBY4F4');
+  }
+  // Load Microsoft Clarity after page load
+  function loadClarity(){
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,'clarity','script','y1cuinz66o');
+  }
+  if(document.readyState==='complete'){loadGA4();loadClarity();}
+  else{window.addEventListener('load',function(){loadGA4();loadClarity();});}
+})();
+</script>
 </head>
 <body>
 <div class="marquee-wrap"><div class="marquee">
@@ -177,7 +204,7 @@
     <div><h4>Support</h4><a href="about.html">About</a><a href="contact.html">Contact</a><a href="shipping.html">Shipping</a><a href="faq.html">FAQ</a></div>
   </div>
   <p class="footer-disc">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
-  <p class="footer-copy">© 2026 Anchor Nutrition, Inc.</p>
+  <p class="footer-copy">© 2026 Anchor Nutrition, Inc. · <a href="/privacy.html">Privacy Policy</a></p>
 </div></footer>
 <script>(function(){const b=document.getElementById('navHamburger'),m=document.getElementById('mobileNav');if(!b||!m)return;b.addEventListener('click',()=>{const o=m.classList.toggle('is-open');b.setAttribute('aria-expanded',String(o));});m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{m.classList.remove('is-open');b.setAttribute('aria-expanded','false');}));})();</script>
 </body></html>
