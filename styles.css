@@ -869,6 +869,92 @@ body.theme-light .protocol-section { background: #fff; }
   .stat-item span { text-align: right; max-width: 55%; }
 }
 
+/* ===== MOBILE SECTION HEIGHT FITTING ===== */
+/* Target: each section ≤ ~555px (iPhone SE 667px − 68px nav − 44px marquee) */
+@media (max-width: 600px) {
+
+  /* -- Global h2 reduction -- */
+  h2 { font-size: clamp(1.35rem, 4.8vw, 2rem); }
+
+  /* -- Section vertical padding tightening -- */
+  .shop-section { padding-top: 1rem; }
+  .science-section { padding: 2rem 1.5rem; }
+  .protocol-section { padding: 2rem 1.5rem; }
+  .subscription-section { padding: 1.5rem 1.5rem; }
+
+  /* ---- Product cards: compact for carousel ---- */
+  .prod-phase { font-size: .57rem; padding: .27rem .6rem; }
+  .prod-img-wrap { aspect-ratio: 16/9; }
+  .prod-body { padding: .65rem .85rem .8rem; }
+  .prod-body h3 { font-size: .9rem; margin-bottom: .08rem; }
+  .prod-sub { font-size: .68rem; margin-bottom: .28rem; }
+  .prod-facts { margin-bottom: .38rem; }
+  .prod-facts li { padding: .16rem 0; font-size: .7rem; }
+  .price { font-size: 1rem; }
+  .price-unit { font-size: .66rem; }
+  .prod-price-row { padding-top: .3rem; }
+  .best-seller-tag { font-size: .52rem; padding: .16rem .5rem; top: 1.6rem; right: .5rem; }
+  .shop-head h2 { font-size: 1.3rem; }
+
+  /* ---- Inside Every Stick: horizontal tabs, hide image, compact panel ---- */
+  .protocol-head { margin-bottom: 1rem; }
+  .protocol-head h2 { font-size: 1.3rem; margin: .25rem 0 .3rem; }
+  .protocol-sub { font-size: .78rem; }
+
+  /* Tabs: force back to 3-col horizontal (override the 860px 1-col rule) */
+  .protocol-tabs {
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 0;
+  }
+  .protocol-tab {
+    padding: .6rem .4rem;
+    border-right: 1px solid var(--border) !important;
+    border-bottom: none !important;
+    gap: .1rem;
+  }
+  .protocol-tab:last-child { border-right: none !important; }
+  .protocol-tab-range { font-size: .75rem; }
+  .protocol-tab-state { display: none; }
+
+  /* Body: 1-col, hide image, compact text */
+  .protocol-body { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+  .protocol-visual { display: none !important; }
+  .protocol-panel { padding: .9rem 0 0; }
+  .protocol-panel h3 { font-size: .95rem; margin-bottom: .4rem; line-height: 1.25; }
+  .protocol-panel p { font-size: .78rem; margin-bottom: .5rem; }
+  .protocol-list { margin-bottom: .75rem; }
+  .protocol-list li { font-size: .75rem; padding: .38rem 0 .38rem 1rem; }
+  .btn-buy { padding: .65rem 1.1rem; font-size: .75rem; }
+
+  /* ---- Science / The Gap ---- */
+  .sci-body { font-size: .8rem; line-height: 1.55; margin-bottom: .5rem; }
+  .sci-badges { margin-top: .45rem; gap: .28rem; }
+  .badge { font-size: .58rem; padding: .18rem .55rem; }
+  .chart-title { font-size: .68rem; margin-bottom: .55rem; }
+  .bars { gap: .55rem; }
+  .science-inner { gap: 1.8rem; }
+
+  /* ---- Subscribe & Save ---- */
+  .sub-head { margin-bottom: .9rem; }
+  .sub-head h2 { font-size: 1.35rem; margin-bottom: .2rem; }
+  .sub-desc { font-size: .76rem; }
+  .sub-card { padding: 1rem; gap: .6rem; border-radius: 14px; }
+  .sub-product-row { margin-bottom: .4rem; }
+  .sub-product-row img { height: 40px; }
+  .sub-left h3 { font-size: .92rem; margin-bottom: .15rem; }
+  .sub-left p { font-size: .73rem; line-height: 1.5; margin-bottom: .45rem; }
+  .sub-perks { gap: .25rem; }
+  .sub-perks li { font-size: .7rem; gap: .28rem; }
+  .sub-price-display { margin-bottom: .2rem; }
+  .sub-now { font-size: 1.7rem; }
+  .sub-was { font-size: .8rem; }
+  .sub-period { font-size: .72rem; }
+  .sub-note { font-size: .66rem; margin-bottom: .6rem; }
+  .subscription-section .btn { margin-bottom: .35rem; }
+  .subscription-section .btn-lg { padding: .6rem .9rem; font-size: .76rem; }
+  .subscription-section .btn-sm { padding: .38rem .8rem; font-size: .7rem; }
+}
+
 /* ===== LIGHT THEME (tweakable) ===== */
 body.theme-light { background: var(--cream); }
 body.theme-light nav { background: rgba(248,245,239,.94); border-bottom: 1px solid var(--border); }
