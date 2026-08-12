@@ -289,7 +289,7 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 .stat-sep { width: 1px; height: 2.5rem; background: rgba(255,255,255,.12); }
 
 /* ===== SCIENCE ===== */
-.science-section { background: var(--ink); }
+.science-section { background: var(--ink); border-top: 2px solid rgba(198,154,75,.45); }
 .science-section h2 { color: #fff; }
 .science-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
 .sci-chart { display: flex; flex-direction: column; justify-content: center; }
@@ -755,6 +755,8 @@ body.theme-light .protocol-section { background: #fff; }
 /* Desktop: hide mobile-only elements */
 .carousel-dots { display: none; }
 .product-card--bundle-m { display: none !important; }
+.sci-donut-grid { display: none; }
+.sub-sticks-m { display: none; }
 
 @media (max-width: 600px) {
   /* --- Hero: full-bleed image first, text centered below --- */
@@ -885,6 +887,7 @@ body.theme-light .protocol-section { background: #fff; }
   /* ---- Product cards: compact for carousel ---- */
   .prod-phase { font-size: .57rem; padding: .27rem .6rem; }
   .prod-img-wrap { aspect-ratio: 16/9; }
+  .prod-img-wrap img { object-fit: contain; }
   .prod-body { padding: .65rem .85rem .8rem; }
   .prod-body h3 { font-size: .9rem; margin-bottom: .08rem; }
   .prod-sub { font-size: .68rem; margin-bottom: .28rem; }
@@ -916,31 +919,72 @@ body.theme-light .protocol-section { background: #fff; }
   .protocol-tab-range { font-size: .75rem; }
   .protocol-tab-state { display: none; }
 
-  /* Body: 1-col, hide image, compact text */
+  /* Body: 1-col, compact image strip, compact text */
   .protocol-body { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
-  .protocol-visual { display: none !important; }
-  .protocol-panel { padding: .9rem 0 0; }
+  .protocol-visual {
+    display: flex !important; order: -1;
+    height: 130px; border-radius: 12px; overflow: hidden;
+    margin-bottom: .75rem; aspect-ratio: unset;
+  }
+  .protocol-visual img { object-fit: contain; background: var(--cream); }
+  .protocol-panel { padding: .4rem 0 0; }
   .protocol-panel h3 { font-size: .95rem; margin-bottom: .4rem; line-height: 1.25; }
   .protocol-panel p { font-size: .78rem; margin-bottom: .5rem; }
   .protocol-list { margin-bottom: .75rem; }
   .protocol-list li { font-size: .75rem; padding: .38rem 0 .38rem 1rem; }
   .btn-buy { padding: .65rem 1.1rem; font-size: .75rem; }
 
-  /* ---- Science / The Gap ---- */
+  /* ---- Science / The Gap: swap bars for donut grid ---- */
   .sci-body { font-size: .8rem; line-height: 1.55; margin-bottom: .5rem; }
   .sci-badges { margin-top: .45rem; gap: .28rem; }
   .badge { font-size: .58rem; padding: .18rem .55rem; }
-  .chart-title { font-size: .68rem; margin-bottom: .55rem; }
-  .bars { gap: .55rem; }
-  .science-inner { gap: 1.8rem; }
+  .chart-title { display: none; }
+  .bars { display: none; }
+  .science-inner { grid-template-columns: 1fr; gap: 1.2rem; }
+  .sci-donut-grid { display: block; }
+  .sci-donut-hero {
+    display: flex; align-items: baseline; gap: .6rem;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 1rem; margin-bottom: .9rem;
+  }
+  .sci-big-pct {
+    font-family: Georgia, serif; font-size: 3.4rem; font-weight: 900;
+    color: #fff; line-height: 1; flex-shrink: 0;
+  }
+  .sci-big-sub { font-size: .68rem; color: rgba(255,255,255,.42); line-height: 1.45; }
+  .sci-nutrient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .sci-n-tile {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+    border-radius: 12px; padding: .8rem .7rem;
+    display: flex; align-items: center; gap: .65rem;
+  }
+  .sci-n-tile--full { grid-column: 1 / -1; }
+  .sci-n-text { display: flex; flex-direction: column; }
+  .sci-n-name { font-size: .57rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.42); }
+  .sci-n-pct { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 900; line-height: 1; margin-top: .05rem; }
+  .sci-n-need { font-size: .52rem; color: rgba(255,255,255,.28); margin-top: .05rem; }
+  .sci-donut { display: block; flex-shrink: 0; }
+  .sci-track { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 4; }
+  .sci-arc {
+    fill: none; stroke-width: 4; stroke-linecap: round;
+    transform-origin: 22px 22px; transform: rotate(-90deg);
+  }
+  .sci-emoji { font-size: 13px; text-anchor: middle; dominant-baseline: central; }
+  .sci-donut-disc { font-size: .58rem; color: rgba(255,255,255,.22); margin-top: .6rem; line-height: 1.5; }
 
   /* ---- Subscribe & Save ---- */
   .sub-head { margin-bottom: .9rem; }
   .sub-head h2 { font-size: 1.35rem; margin-bottom: .2rem; }
   .sub-desc { font-size: .76rem; }
-  .sub-card { padding: 1rem; gap: .6rem; border-radius: 14px; }
-  .sub-product-row { margin-bottom: .4rem; }
-  .sub-product-row img { height: 40px; }
+  .sub-card { padding: 0; gap: 0; border-radius: 14px; overflow: hidden; border: none; box-shadow: none; }
+  .sub-sticks-m {
+    display: block; width: 100%; aspect-ratio: 4/3;
+    object-fit: contain; background: var(--cream);
+  }
+  .sub-card .sub-left,
+  .sub-card .sub-right { padding: .9rem 1.1rem; }
+  .sub-card .sub-right { border-top: 1px solid var(--border); padding-top: .75rem; }
+  .sub-product-row { display: none; }
   .sub-left h3 { font-size: .92rem; margin-bottom: .15rem; }
   .sub-left p { font-size: .73rem; line-height: 1.5; margin-bottom: .45rem; }
   .sub-perks { gap: .25rem; }
