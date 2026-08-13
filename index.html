@@ -728,7 +728,303 @@
   </button>
 </div>
 
-<script src="script.js?v=6"></script>
+<script>
+/* ===== PROTOCOL TABS (with video support) ===== */
+(function () {
+  const wrap = document.getElementById('protocolTabs');
+  if (!wrap) return;
+  // Autoplay initial active video
+  document.querySelectorAll('[data-phase-img].active').forEach(el => {
+    if (el.tagName === 'VIDEO') el.play();
+  });
+  wrap.addEventListener('click', (e) => {
+    const tab = e.target.closest('.protocol-tab');
+    if (!tab) return;
+    const phase = tab.dataset.phase;
+    document.querySelectorAll('.protocol-tab').forEach(t => t.classList.toggle('active', t === tab));
+    document.querySelectorAll('.protocol-panel').forEach(p => p.classList.toggle('active', p.dataset.phase === phase));
+    document.querySelectorAll('[data-phase-img]').forEach(el => {
+      const isActive = el.dataset.phaseImg === phase;
+      el.classList.toggle('active', isActive);
+      if (el.tagName === 'VIDEO') { if (isActive) { el.play(); } else { el.pause(); } }
+    });
+  });
+})();
+
+/* ===== NAV SHADOW ===== */
+(function () {
+  const nav = document.getElementById('mainNav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = scrollY > 24 ? '0 4px 20px rgba(0,0,0,.08)' : 'none';
+  }, { passive: true });
+})();
+
+/* ===== REVEAL ===== */
+(function () {
+  function revealFallback() {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      if (el.getBoundingClientRect().top < (innerHeight || 800) * 0.95) el.classList.add('visible');
+    });
+    const barsEl = document.getElementById('bars');
+    if (barsEl && !barsEl.dataset.filled && barsEl.getBoundingClientRect().top < (innerHeight || 800) * 0.9) fillBars();
+  }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i * 80) + 'ms';
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+  window.addEventListener('scroll', revealFallback, { passive: true });
+  window.addEventListener('resize', revealFallback);
+  setTimeout(revealFallback, 800);
+})();
+
+/* ===== GAP BARS ===== */
+function fillBars() {
+  const barsEl = document.getElementById('bars');
+  if (!barsEl || barsEl.dataset.filled) return;
+  barsEl.dataset.filled = '1';
+  barsEl.querySelectorAll('.bar-row').forEach((row, i) => {
+    setTimeout(() => {
+      const bar = row.querySelector('.bar i');
+      if (bar) bar.style.width = row.dataset.fill + '%';
+    }, i * 140);
+  });
+}
+(function () {
+  const barsEl = document.getElementById('bars');
+  if (!barsEl) return;
+  if ('IntersectionObserver' in window) {
+    const barIO = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { fillBars(); barIO.unobserve(e.target); } });
+    }, { threshold: .3 });
+    barIO.observe(barsEl);
+  }
+})();
+
+/* ===== ACCORDION (faq-q and acc-q) ===== */
+(function () {
+  function initAccordion(qSel, itemSel, iconSel, aSel) {
+    document.querySelectorAll(qSel).forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest(itemSel);
+        if (!item) return;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll(itemSel + '.open').forEach(i => {
+          i.classList.remove('open');
+          const icon = i.querySelector(iconSel);
+          if (icon) icon.textContent = '+';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          const icon = btn.querySelector(iconSel);
+          if (icon) icon.textContent = '&times;';
+        }
+      });
+    });
+  }
+  initAccordion('.faq-q', '.faq-item', '.faq-icon', '.faq-a');
+  initAccordion('.acc-q', '.acc-item', '.acc-icon', '.acc-a');
+})();
+
+/* ===== REVIEWS CAROUSEL ===== */
+(function () {
+  const reviewsTrack = document.getElementById('reviewsTrack');
+  if (!reviewsTrack) return;
+  const origCards = Array.from(reviewsTrack.querySelectorAll('.review-card'));
+  origCards.forEach(c => reviewsTrack.appendChild(c.cloneNode(true)));
+  const total = origCards.length;
+  let idx = 0, animating = false;
+  function getCardW() {
+    const c = reviewsTrack.querySelector('.review-card');
+    return c ? c.offsetWidth + 19 : 340;
+  }
+  function jumpTo(i) {
+    reviewsTrack.style.transition = 'none';
+    idx = i;
+    reviewsTrack.style.transform = `translateX(-${idx * getCardW()}px)`;
+    reviewsTrack.offsetHeight;
+  }
+  function slideTo(i) {
+    if (animating) return;
+    animating = true;
+    idx = i;
+    reviewsTrack.style.transition = 'transform .4s cubic-bezier(.4,0,.2,1)';
+    reviewsTrack.style.transform = `translateX(-${idx * getCardW()}px)`;
+  }
+  reviewsTrack.addEventListener('transitionend', () => {
+    animating = false;
+    if (idx >= total) jumpTo(idx - total);
+    else if (idx < 0) jumpTo(idx + total);
+  });
+  const revPrev = document.getElementById('revPrev');
+  const revNext = document.getElementById('revNext');
+  if (revNext) revNext.addEventListener('click', () => slideTo(idx + 1));
+  if (revPrev) revPrev.addEventListener('click', () => slideTo(idx - 1));
+})();
+
+/* ===== THEME TWEAK ===== */
+(function () {
+  const KEY = 'anchor-theme';
+  const THEMES = ['dark', 'light'];
+  let theme = THEMES.includes(localStorage.getItem(KEY)) ? localStorage.getItem(KEY) : 'dark';
+  const apply = (t) => { document.body.classList.toggle('theme-light', t === 'light'); };
+  apply(theme);
+  const wrap = document.getElementById('tweaks');
+  if (!wrap) return;
+  const seg = document.getElementById('tweakTheme');
+  const sync = () => seg && seg.querySelectorAll('button').forEach(b =>
+    b.setAttribute('aria-checked', String(b.dataset.theme === theme)));
+  sync();
+  const toggle = document.getElementById('tweaksToggle');
+  if (toggle) toggle.addEventListener('click', () => wrap.classList.toggle('is-open'));
+  if (seg) seg.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-theme]');
+    if (!btn) return;
+    theme = btn.dataset.theme;
+    apply(theme);
+    sync();
+    localStorage.setItem(KEY, theme);
+  });
+})();
+
+/* ===== CART DRAWER ===== */
+(function () {
+  const KEY = 'anchor-cart';
+  const FREE_AT = 99;
+  const CHECKOUT_ENDPOINT = 'https://anchor-checkout.judahswebsites.workers.dev';
+  let items = [];
+  try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { items = []; }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cart-overlay';
+  const drawer = document.createElement('aside');
+  drawer.className = 'cart-drawer';
+  drawer.setAttribute('aria-label', 'Shopping cart');
+  drawer.innerHTML = `
+    <div class="cart-head"><h3>Your Cart <span data-cart-n></span></h3><button class="cart-close" aria-label="Close cart">&times;</button></div>
+    <div class="cart-ship"><span data-ship-msg></span><div class="cart-ship-bar"><i data-ship-bar></i></div></div>
+    <div class="cart-items" data-cart-items></div>
+    <div class="cart-foot">
+      <div class="cart-sub-row"><span>Subtotal</span><b data-cart-total>$0.00</b></div>
+      <button type="button" class="btn btn-gold" data-checkout>Checkout</button>
+      <p>Shipping and taxes calculated at checkout.</p>
+    </div>`;
+  document.body.append(overlay, drawer);
+
+  const $items = drawer.querySelector('[data-cart-items]');
+  const $total = drawer.querySelector('[data-cart-total]');
+  const $n = drawer.querySelector('[data-cart-n]');
+  const $shipMsg = drawer.querySelector('[data-ship-msg]');
+  const $shipBar = drawer.querySelector('[data-ship-bar]');
+
+  const money = (v) => '$' + v.toFixed(2);
+  const count = () => items.reduce((s, i) => s + i.qty, 0);
+  const total = () => items.reduce((s, i) => s + i.qty * i.price, 0);
+
+  function open() { overlay.classList.add('is-open'); drawer.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+  function close() { overlay.classList.remove('is-open'); drawer.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+  function render() {
+    localStorage.setItem(KEY, JSON.stringify(items));
+    const n = count(), t = total();
+    $n.textContent = n ? '(' + n + ')' : '';
+    $total.textContent = money(t);
+    const remain = Math.max(0, FREE_AT - t);
+    $shipMsg.innerHTML = remain > 0 ? 'You\'re <b>' + money(remain) + '</b> away from free shipping' : '<b>Free shipping unlocked.</b>';
+    $shipBar.style.width = Math.min(100, (t / FREE_AT) * 100) + '%';
+    $items.innerHTML = items.length ? items.map(i => `
+      <div class="cart-line" data-line="${i.id}">
+        <img class="cart-line-img" src="${i.img}" alt="${i.name}">
+        <div>
+          <div class="cart-line-name">${i.name}</div>
+          <div class="cart-line-sub">${i.sub}</div>
+          <div class="cart-qty"><button data-step="-1" aria-label="Decrease">&minus;</button><span>${i.qty}</span><button data-step="1" aria-label="Increase">+</button></div>
+        </div>
+        <div class="cart-line-right">
+          <span class="cart-line-price">${money(i.qty * i.price)}</span>
+          <button class="cart-remove" data-remove>Remove</button>
+        </div>
+      </div>`).join('') : '<div class="cart-empty">Your cart is empty.</div>';
+    document.querySelectorAll('.icon-btn[aria-label="Cart"]').forEach(b => {
+      let badge = b.querySelector('.cart-count');
+      if (!n) { if (badge) badge.remove(); return; }
+      if (!badge) { badge = document.createElement('span'); badge.className = 'cart-count'; b.appendChild(badge); }
+      badge.textContent = n;
+    });
+  }
+
+  function checkout() {
+    if (!items.length) return;
+    const base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+    fetch(CHECKOUT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items.map(i => ({ id: i.id, qty: i.qty })), baseUrl: base }),
+    }).then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (!ok || data.error) { alert(data.error || 'Checkout failed.'); return; }
+        window.location.href = data.url;
+      }).catch(err => { alert(err.message); });
+  }
+
+  function add(data, qty) {
+    const found = items.find(i => i.id === data.id);
+    if (found) found.qty += qty;
+    else items.push({ id: data.id, name: data.name, price: parseFloat(data.price), img: data.img, sub: data.sub, qty });
+    render(); open();
+  }
+
+  document.addEventListener('click', (e) => {
+    const addBtn = e.target.closest('.add-btn[data-id]');
+    if (addBtn) {
+      e.preventDefault();
+      const qEl = addBtn.dataset.qty && document.getElementById(addBtn.dataset.qty);
+      add(addBtn.dataset, qEl ? parseInt(qEl.textContent, 10) || 1 : 1);
+      return;
+    }
+    if (e.target.closest('.icon-btn[aria-label="Cart"]')) { e.preventDefault(); render(); open(); return; }
+    if (e.target === overlay || e.target.closest('.cart-close')) { close(); return; }
+    if (e.target.closest('[data-checkout]')) { checkout(); return; }
+    const line = e.target.closest('.cart-line');
+    if (!line) return;
+    const item = items.find(i => i.id === line.dataset.line);
+    if (!item) return;
+    if (e.target.closest('[data-remove]')) { items = items.filter(i => i !== item); render(); return; }
+    const step = e.target.closest('[data-step]');
+    if (step) { item.qty += parseInt(step.dataset.step, 10); if (item.qty < 1) items = items.filter(i => i !== item); render(); }
+  });
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  render();
+})();
+
+/* ===== MOBILE NAV ===== */
+(function () {
+  const btn = document.getElementById('navHamburger');
+  const menu = document.getElementById('mobileNav');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+  }));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { menu.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
+
 <script>
 (function(){
   var grid = document.querySelector('.product-grid');
