@@ -111,7 +111,7 @@ nav {
 h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 
 /* ===== FIRST SCREEN (marquee + nav + hero, flush to viewport) ===== */
-.first-screen { display: flex; flex-direction: column; height: 100vh; max-height: 800px; }
+.first-screen { display: flex; flex-direction: column; height: 100vh; min-height: 560px; }
 
 /* ===== HERO (dark) ===== */
 .hero {
@@ -188,6 +188,7 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
   height: 100%;
   display: block;
   object-fit: cover;
+  object-position: center top;
   border-radius: 20px;
 }
 .hero-badge {
