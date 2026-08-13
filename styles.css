@@ -461,7 +461,8 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
   justify-content: center;
   overflow: hidden;
 }
-.protocol-visual img {
+.protocol-visual img,
+.protocol-visual video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -470,7 +471,8 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
   opacity: 0;
   transition: opacity .3s;
 }
-.protocol-visual img.active { opacity: 1; }
+.protocol-visual img.active,
+.protocol-visual video.active { opacity: 1; }
 
 body.theme-light .protocol-section { background: #fff; }
 
