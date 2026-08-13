@@ -1,45 +1,59 @@
-/* ===== PROTOCOL TABS ===== */
+/* ===== PROTOCOL TABS (with video support) ===== */
 (function () {
   const wrap = document.getElementById('protocolTabs');
   if (!wrap) return;
+  // Autoplay initial active video
+  document.querySelectorAll('[data-phase-img].active').forEach(el => {
+    if (el.tagName === 'VIDEO') el.play();
+  });
   wrap.addEventListener('click', (e) => {
     const tab = e.target.closest('.protocol-tab');
     if (!tab) return;
     const phase = tab.dataset.phase;
     document.querySelectorAll('.protocol-tab').forEach(t => t.classList.toggle('active', t === tab));
     document.querySelectorAll('.protocol-panel').forEach(p => p.classList.toggle('active', p.dataset.phase === phase));
-    document.querySelectorAll('[data-phase-img]').forEach(img => img.classList.toggle('active', img.dataset.phaseImg === phase));
+    document.querySelectorAll('[data-phase-img]').forEach(el => {
+      const isActive = el.dataset.phaseImg === phase;
+      el.classList.toggle('active', isActive);
+      if (el.tagName === 'VIDEO') { if (isActive) { el.play(); } else { el.pause(); } }
+    });
   });
 })();
 
 /* ===== NAV SHADOW ===== */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.style.boxShadow = scrollY > 24 ? '0 4px 20px rgba(0,0,0,.08)' : 'none';
-}, { passive: true });
+(function () {
+  const nav = document.getElementById('mainNav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = scrollY > 24 ? '0 4px 20px rgba(0,0,0,.08)' : 'none';
+  }, { passive: true });
+})();
 
 /* ===== REVEAL ===== */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      e.target.style.transitionDelay = (i * 80) + 'ms';
-      e.target.classList.add('visible');
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-function revealFallback() {
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
-    if (el.getBoundingClientRect().top < (innerHeight || 800) * 0.95) el.classList.add('visible');
-  });
-  const barsEl = document.getElementById('bars');
-  if (barsEl && !barsEl.dataset.filled && barsEl.getBoundingClientRect().top < (innerHeight || 800) * 0.9) fillBars();
-}
-window.addEventListener('scroll', revealFallback, { passive: true });
-window.addEventListener('resize', revealFallback);
-setTimeout(revealFallback, 800);
+(function () {
+  function revealFallback() {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      if (el.getBoundingClientRect().top < (innerHeight || 800) * 0.95) el.classList.add('visible');
+    });
+    const barsEl = document.getElementById('bars');
+    if (barsEl && !barsEl.dataset.filled && barsEl.getBoundingClientRect().top < (innerHeight || 800) * 0.9) fillBars();
+  }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i * 80) + 'ms';
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+  window.addEventListener('scroll', revealFallback, { passive: true });
+  window.addEventListener('resize', revealFallback);
+  setTimeout(revealFallback, 800);
+})();
 
 /* ===== GAP BARS ===== */
 function fillBars() {
@@ -48,58 +62,65 @@ function fillBars() {
   barsEl.dataset.filled = '1';
   barsEl.querySelectorAll('.bar-row').forEach((row, i) => {
     setTimeout(() => {
-      row.querySelector('.bar i').style.width = row.dataset.fill + '%';
+      const bar = row.querySelector('.bar i');
+      if (bar) bar.style.width = row.dataset.fill + '%';
     }, i * 140);
   });
 }
-const barsEl = document.getElementById('bars');
-if (barsEl) {
-  const barIO = new IntersectionObserver((es) => {
-    es.forEach(e => { if (e.isIntersecting) { fillBars(); barIO.unobserve(e.target); } });
-  }, { threshold: .3 });
-  barIO.observe(barsEl);
-}
+(function () {
+  const barsEl = document.getElementById('bars');
+  if (!barsEl) return;
+  if ('IntersectionObserver' in window) {
+    const barIO = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { fillBars(); barIO.unobserve(e.target); } });
+    }, { threshold: .3 });
+    barIO.observe(barsEl);
+  }
+})();
 
-/* ===== ACCORDION ===== */
-document.querySelectorAll('.acc-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.acc-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.acc-item').forEach(i => {
-      i.classList.remove('open');
-      i.querySelector('.acc-icon').textContent = '+';
+/* ===== ACCORDION (faq-q and acc-q) ===== */
+(function () {
+  function initAccordion(qSel, itemSel, iconSel, aSel) {
+    document.querySelectorAll(qSel).forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest(itemSel);
+        if (!item) return;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll(itemSel + '.open').forEach(i => {
+          i.classList.remove('open');
+          const icon = i.querySelector(iconSel);
+          if (icon) icon.textContent = '+';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          const icon = btn.querySelector(iconSel);
+          if (icon) icon.textContent = '×';
+        }
+      });
     });
-    if (!isOpen) {
-      item.classList.add('open');
-      btn.querySelector('.acc-icon').textContent = '×';
-    }
-  });
-});
+  }
+  initAccordion('.faq-q', '.faq-item', '.faq-icon', '.faq-a');
+  initAccordion('.acc-q', '.acc-item', '.acc-icon', '.acc-a');
+})();
 
-/* ===== REVIEWS CAROUSEL (true infinite loop via clone) ===== */
-const reviewsTrack = document.getElementById('reviewsTrack');
-if (reviewsTrack) {
-  // Clone all cards and append so we have: [original x6] [clone x6]
+/* ===== REVIEWS CAROUSEL ===== */
+(function () {
+  const reviewsTrack = document.getElementById('reviewsTrack');
+  if (!reviewsTrack) return;
   const origCards = Array.from(reviewsTrack.querySelectorAll('.review-card'));
   origCards.forEach(c => reviewsTrack.appendChild(c.cloneNode(true)));
-
-  const total = origCards.length; // 6
-  let idx = 0;
-  let animating = false;
-
+  const total = origCards.length;
+  let idx = 0, animating = false;
   function getCardW() {
     const c = reviewsTrack.querySelector('.review-card');
     return c ? c.offsetWidth + 19 : 340;
   }
-
   function jumpTo(i) {
     reviewsTrack.style.transition = 'none';
     idx = i;
     reviewsTrack.style.transform = `translateX(-${idx * getCardW()}px)`;
-    // force reflow so next transition applies cleanly
     reviewsTrack.offsetHeight;
   }
-
   function slideTo(i) {
     if (animating) return;
     animating = true;
@@ -107,40 +128,33 @@ if (reviewsTrack) {
     reviewsTrack.style.transition = 'transform .4s cubic-bezier(.4,0,.2,1)';
     reviewsTrack.style.transform = `translateX(-${idx * getCardW()}px)`;
   }
-
   reviewsTrack.addEventListener('transitionend', () => {
     animating = false;
-    // If we've slid into the clone zone, silently snap back to originals
     if (idx >= total) jumpTo(idx - total);
     else if (idx < 0) jumpTo(idx + total);
   });
-
   const revPrev = document.getElementById('revPrev');
   const revNext = document.getElementById('revNext');
   if (revNext) revNext.addEventListener('click', () => slideTo(idx + 1));
   if (revPrev) revPrev.addEventListener('click', () => slideTo(idx - 1));
-}
+})();
 
 /* ===== THEME TWEAK ===== */
 (function () {
   const KEY = 'anchor-theme';
   const THEMES = ['dark', 'light'];
   let theme = THEMES.includes(localStorage.getItem(KEY)) ? localStorage.getItem(KEY) : 'dark';
-
-  const apply = (t) => {
-    document.body.classList.toggle('theme-light', t === 'light');
-  };
+  const apply = (t) => { document.body.classList.toggle('theme-light', t === 'light'); };
   apply(theme);
-
   const wrap = document.getElementById('tweaks');
   if (!wrap) return;
   const seg = document.getElementById('tweakTheme');
-  const sync = () => seg.querySelectorAll('button').forEach(b =>
+  const sync = () => seg && seg.querySelectorAll('button').forEach(b =>
     b.setAttribute('aria-checked', String(b.dataset.theme === theme)));
   sync();
-
-  document.getElementById('tweaksToggle').addEventListener('click', () => wrap.classList.toggle('is-open'));
-  seg.addEventListener('click', (e) => {
+  const toggle = document.getElementById('tweaksToggle');
+  if (toggle) toggle.addEventListener('click', () => wrap.classList.toggle('is-open'));
+  if (seg) seg.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-theme]');
     if (!btn) return;
     theme = btn.dataset.theme;
@@ -149,7 +163,6 @@ if (reviewsTrack) {
     localStorage.setItem(KEY, theme);
   });
 })();
-
 
 /* ===== CART DRAWER ===== */
 (function () {
@@ -196,7 +209,6 @@ if (reviewsTrack) {
     const remain = Math.max(0, FREE_AT - t);
     $shipMsg.innerHTML = remain > 0 ? 'You\'re <b>' + money(remain) + '</b> away from free shipping' : '<b>Free shipping unlocked.</b>';
     $shipBar.style.width = Math.min(100, (t / FREE_AT) * 100) + '%';
-
     $items.innerHTML = items.length ? items.map(i => `
       <div class="cart-line" data-line="${i.id}">
         <img class="cart-line-img" src="${i.img}" alt="${i.name}">
@@ -210,7 +222,6 @@ if (reviewsTrack) {
           <button class="cart-remove" data-remove>Remove</button>
         </div>
       </div>`).join('') : '<div class="cart-empty">Your cart is empty.</div>';
-
     document.querySelectorAll('.icon-btn[aria-label="Cart"]').forEach(b => {
       let badge = b.querySelector('.cart-count');
       if (!n) { if (badge) badge.remove(); return; }
@@ -225,17 +236,12 @@ if (reviewsTrack) {
     fetch(CHECKOUT_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        items: items.map((i) => ({ id: i.id, qty: i.qty })),
-        baseUrl: base,
-      }),
-    }).then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+      body: JSON.stringify({ items: items.map(i => ({ id: i.id, qty: i.qty })), baseUrl: base }),
+    }).then(res => res.json().then(data => ({ ok: res.ok, data })))
       .then(({ ok, data }) => {
         if (!ok || data.error) { alert(data.error || 'Checkout failed.'); return; }
         window.location.href = data.url;
-      }).catch((err) => {
-        alert(err.message);
-      });
+      }).catch(err => { alert(err.message); });
   }
 
   function add(data, qty) {
@@ -256,18 +262,13 @@ if (reviewsTrack) {
     if (e.target.closest('.icon-btn[aria-label="Cart"]')) { e.preventDefault(); render(); open(); return; }
     if (e.target === overlay || e.target.closest('.cart-close')) { close(); return; }
     if (e.target.closest('[data-checkout]')) { checkout(); return; }
-
     const line = e.target.closest('.cart-line');
     if (!line) return;
     const item = items.find(i => i.id === line.dataset.line);
     if (!item) return;
     if (e.target.closest('[data-remove]')) { items = items.filter(i => i !== item); render(); return; }
     const step = e.target.closest('[data-step]');
-    if (step) {
-      item.qty += parseInt(step.dataset.step, 10);
-      if (item.qty < 1) items = items.filter(i => i !== item);
-      render();
-    }
+    if (step) { item.qty += parseInt(step.dataset.step, 10); if (item.qty < 1) items = items.filter(i => i !== item); render(); }
   });
 
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });

@@ -727,67 +727,7 @@
   </button>
 </div>
 
-<script>
-// Protocol tabs
-(function(){
-  var tabs = document.querySelectorAll('.protocol-tab');
-  var panels = document.querySelectorAll('.protocol-panel');
-  var imgs = document.querySelectorAll('[data-phase-img]');
-  if (!tabs.length) return;
-  tabs.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var phase = btn.getAttribute('data-phase');
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      btn.classList.add('active');
-      panels.forEach(function(p) { p.classList.toggle('active', p.getAttribute('data-phase') === phase); });
-      imgs.forEach(function(el) {
-        var isActive = el.getAttribute('data-phase-img') === phase;
-        el.classList.toggle('active', isActive);
-        if (el.tagName === 'VIDEO') {
-          if (isActive) { el.play(); } else { el.pause(); }
-        }
-      });
-    });
-  });
-  // Autoplay the first active video on load
-  document.querySelectorAll('[data-phase-img].active').forEach(function(el) {
-    if (el.tagName === 'VIDEO') el.play();
-  });
-})();
-// Theme tweaks
-(function(){
-  var tweakToggle = document.getElementById('tweaksToggle');
-  var tweaks = document.getElementById('tweaks');
-  if (tweakToggle && tweaks) {
-    tweakToggle.addEventListener('click', function() { tweaks.classList.toggle('open'); });
-  }
-  var themebtns = document.querySelectorAll('#tweakTheme button');
-  themebtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var t = btn.getAttribute('data-theme');
-      document.body.className = document.body.className.replace(/\btheme-\S+/g,'').trim();
-      document.body.classList.add('theme-' + t);
-      themebtns.forEach(function(b) { b.setAttribute('aria-checked', b === btn ? 'true' : 'false'); });
-    });
-  });
-})();
-// Nav hamburger
-(function(){
-  var btn = document.getElementById('navHamburger');
-  var menu = document.getElementById('mobileNav');
-  if (!btn || !menu) return;
-  btn.addEventListener('click', function() {
-    var open = menu.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', String(open));
-  });
-  menu.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      menu.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
-    });
-  });
-})();
-</script>
+<script src="script.js?v=6"></script>
 <script>
 (function(){
   var grid = document.querySelector('.product-grid');
