@@ -94,7 +94,7 @@ function fillBars() {
         if (!isOpen) {
           item.classList.add('open');
           const icon = btn.querySelector(iconSel);
-          if (icon) icon.textContent = '×';
+          if (icon) icon.textContent = '&times;';
         }
       });
     });
