@@ -56,6 +56,7 @@ export default {
     params.set('success_url', base + 'index.html?checkout=success');
     params.set('cancel_url', base + 'index.html?checkout=cancelled');
     params.set('shipping_address_collection[allowed_countries][0]', 'US');
+    params.set('phone_number_collection[enabled]', 'true');
     if (env.STRIPE_AUTOMATIC_TAX === 'true') {
       params.set('automatic_tax[enabled]', 'true');
     }
