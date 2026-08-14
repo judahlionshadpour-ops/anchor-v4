@@ -812,6 +812,14 @@ function fillBars() {
   initAccordion('.acc-q', '.acc-item', '.acc-icon', '.acc-a');
 })();
 
+/* ===== REEL CAROUSEL (seamless infinite CSS animation) ===== */
+(function () {
+  const carousel = document.querySelector('.reel-carousel');
+  if (!carousel) return;
+  const origCards = Array.from(carousel.querySelectorAll('.reel-card'));
+  origCards.forEach(c => carousel.appendChild(c.cloneNode(true)));
+})();
+
 /* ===== REVIEWS CAROUSEL ===== */
 (function () {
   const reviewsTrack = document.getElementById('reviewsTrack');
