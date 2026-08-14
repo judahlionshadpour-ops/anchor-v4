@@ -331,7 +331,7 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 .science-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
 .sci-chart { display: flex; flex-direction: column; justify-content: center; }
 .sci-chart .bars { gap: 1.6rem; }
-.sci-image { width: 100%; height: auto; max-width: 500px; object-fit: contain; }
+.sci-image { width: 100%; height: auto; max-width: 500px; object-fit: contain; border-radius: 24px; overflow: hidden; }
 .sci-body { font-size: .95rem; margin-bottom: 1rem; color: rgba(255,255,255,.65); }
 .sci-badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
 .badge { font-family: -apple-system, sans-serif; font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; border: 1.5px solid rgba(255,255,255,.35); border-radius: var(--rad-pill); padding: .35rem 1rem; color: #fff; }
