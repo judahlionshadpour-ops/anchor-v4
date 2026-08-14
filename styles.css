@@ -291,41 +291,39 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 
 /* ===== NUTRIENT STATS ===== */
 .stats-bar.nutrient-stats {
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(1.5rem, 4vw, 3rem);
   flex-wrap: nowrap;
-  justify-content: space-around;
-  padding: 3rem clamp(1.5rem, 5vw, 4rem);
+  justify-content: center;
+  padding: 2.5rem clamp(1rem, 5vw, 3rem);
 }
 .nutrient-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem;
+  gap: 0.8rem;
+  min-width: 0;
 }
 .nutrient-circle {
-  width: clamp(60px, 12vw, 100px);
-  height: clamp(60px, 12vw, 100px);
-  border-radius: 50%;
-  background: conic-gradient(var(--color, #c69a4b) 0deg, var(--color, #c69a4b) 180deg, rgba(255,255,255,.1) 180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid rgba(255,255,255,.15);
-}
-.nutrient-pct {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  font-weight: 900;
-  color: var(--color, #c69a4b);
+  width: clamp(70px, 12vw, 100px);
+  height: clamp(70px, 12vw, 100px);
+  display: block;
+  flex-shrink: 0;
 }
 .nutrient-label {
-  font-size: .65rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.75rem);
   text-transform: uppercase;
-  letter-spacing: .06em;
-  color: rgba(255,255,255,.7);
+  letter-spacing: .07em;
+  color: rgba(255,255,255,.65);
   line-height: 1.3;
+  font-weight: 500;
 }
-.nutrient-label small { font-size: .55rem; color: rgba(255,255,255,.5); display: block; }
+.nutrient-label small {
+  font-size: clamp(0.5rem, 1.2vw, 0.65rem);
+  color: rgba(255,255,255,.45);
+  display: block;
+  font-weight: 400;
+}
 
 /* ===== SCIENCE ===== */
 .science-section { background: var(--ink); border-top: 2px solid rgba(198,154,75,.45); }
@@ -333,6 +331,7 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 .science-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
 .sci-chart { display: flex; flex-direction: column; justify-content: center; }
 .sci-chart .bars { gap: 1.6rem; }
+.sci-image { width: 100%; height: auto; max-width: 500px; object-fit: contain; }
 .sci-body { font-size: .95rem; margin-bottom: 1rem; color: rgba(255,255,255,.65); }
 .sci-badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
 .badge { font-family: -apple-system, sans-serif; font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; border: 1.5px solid rgba(255,255,255,.35); border-radius: var(--rad-pill); padding: .35rem 1rem; color: #fff; }
