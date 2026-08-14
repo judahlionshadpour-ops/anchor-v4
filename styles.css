@@ -289,6 +289,44 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 .stat-item span { font-family: -apple-system, sans-serif; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.6); }
 .stat-sep { width: 1px; height: 2.5rem; background: rgba(255,255,255,.12); }
 
+/* ===== NUTRIENT STATS ===== */
+.stats-bar.nutrient-stats {
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  padding: 3rem clamp(1.5rem, 5vw, 4rem);
+}
+.nutrient-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+.nutrient-circle {
+  width: clamp(60px, 12vw, 100px);
+  height: clamp(60px, 12vw, 100px);
+  border-radius: 50%;
+  background: conic-gradient(var(--color, #c69a4b) 0deg, var(--color, #c69a4b) 180deg, rgba(255,255,255,.1) 180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255,255,255,.15);
+}
+.nutrient-pct {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 900;
+  color: var(--color, #c69a4b);
+}
+.nutrient-label {
+  font-size: .65rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.7);
+  line-height: 1.3;
+}
+.nutrient-label small { font-size: .55rem; color: rgba(255,255,255,.5); display: block; }
+
 /* ===== SCIENCE ===== */
 .science-section { background: var(--ink); border-top: 2px solid rgba(198,154,75,.45); }
 .science-section h2 { color: #fff; }
