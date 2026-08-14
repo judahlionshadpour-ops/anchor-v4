@@ -2,10 +2,20 @@
 (function () {
   const wrap = document.getElementById('protocolTabs');
   if (!wrap) return;
-  // Autoplay initial active video
-  document.querySelectorAll('[data-phase-img].active').forEach(el => {
-    if (el.tagName === 'VIDEO') el.play();
-  });
+  const videoEl = document.querySelector('[data-phase-img="1"]');
+  if (videoEl && videoEl.tagName === 'VIDEO') {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.target.paused) {
+            e.target.play().catch(() => {});
+          } else if (!e.isIntersecting && !e.target.paused) {
+            e.target.pause();
+          }
+        });
+      }, { threshold: .3 }).observe(videoEl);
+    }
+  }
   wrap.addEventListener('click', (e) => {
     const tab = e.target.closest('.protocol-tab');
     if (!tab) return;
@@ -15,7 +25,13 @@
     document.querySelectorAll('[data-phase-img]').forEach(el => {
       const isActive = el.dataset.phaseImg === phase;
       el.classList.toggle('active', isActive);
-      if (el.tagName === 'VIDEO') { if (isActive) { el.play(); } else { el.pause(); } }
+      if (el.tagName === 'VIDEO') {
+        if (isActive) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      }
     });
   });
 })();
