@@ -124,7 +124,7 @@ function fillBars() {
   const reviewsTrack = document.getElementById('reviewsTrack');
   if (!reviewsTrack) return;
   const origCards = Array.from(reviewsTrack.querySelectorAll('.review-card'));
-  origCards.forEach(c => reviewsTrack.appendChild(c.cloneNode(true)));
+  for (let i = 0; i < 3; i++) origCards.forEach(c => reviewsTrack.appendChild(c.cloneNode(true)));
   const total = origCards.length;
   let idx = 0, animating = false;
   function getCardW() {
@@ -146,8 +146,8 @@ function fillBars() {
   }
   reviewsTrack.addEventListener('transitionend', () => {
     animating = false;
-    if (idx >= total) jumpTo(idx - total);
-    else if (idx < 0) jumpTo(idx + total);
+    if (idx >= total * 2) jumpTo(idx - total * 2);
+    else if (idx < 0) jumpTo(idx + total * 2);
   });
   const revPrev = document.getElementById('revPrev');
   const revNext = document.getElementById('revNext');
