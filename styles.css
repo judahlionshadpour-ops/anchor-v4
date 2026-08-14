@@ -326,7 +326,7 @@ h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
 }
 
 /* ===== SCIENCE ===== */
-.science-section { background: var(--ink); border-top: 2px solid rgba(198,154,75,.45); }
+.science-section { background: var(--ink); border-top: 2px solid rgba(198,154,75,.45); padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem); }
 .science-section h2 { color: #fff; }
 .science-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
 .sci-chart { display: flex; flex-direction: column; justify-content: center; }
