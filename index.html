@@ -372,30 +372,6 @@
   </div>
 </section>
 
-<!-- NUTRIENT STATS -->
-<div class="stats-bar nutrient-stats">
-  <div class="nutrient-stat">
-    <svg class="nutrient-circle" width="80" height="80" viewBox="0 0 44 44"><circle class="sci-track" cx="22" cy="22" r="18"/><circle class="sci-arc" cx="22" cy="22" r="18" stroke="#b4674a" stroke-dasharray="43 70"/><text class="sci-emoji" x="16.1" y="28.1">🥩</text></svg>
-    <div class="nutrient-label">PROTEIN<br><small><span style="color:#b4674a">38%</span> of daily value</small></div>
-  </div>
-  <div class="nutrient-stat">
-    <svg class="nutrient-circle" width="80" height="80" viewBox="0 0 44 44"><circle class="sci-track" cx="22" cy="22" r="18"/><circle class="sci-arc" cx="22" cy="22" r="18" stroke="#ffffff" stroke-dasharray="35 78"/><text class="sci-emoji" x="16.1" y="28.1">🌾</text></svg>
-    <div class="nutrient-label">FIBER<br><small><span style="color:#ffffff">31%</span> of daily value</small></div>
-  </div>
-  <div class="nutrient-stat">
-    <svg class="nutrient-circle" width="80" height="80" viewBox="0 0 44 44"><circle class="sci-track" cx="22" cy="22" r="18"/><circle class="sci-arc" cx="22" cy="22" r="18" stroke="#4a80c4" stroke-dasharray="50 63"/><text class="sci-emoji" x="14.8" y="28.1">⚡</text></svg>
-    <div class="nutrient-label">POTASSIUM<br><small><span style="color:#4a80c4">44%</span> of daily value</small></div>
-  </div>
-  <div class="nutrient-stat">
-    <svg class="nutrient-circle" width="80" height="80" viewBox="0 0 44 44"><circle class="sci-track" cx="22" cy="22" r="18"/><circle class="sci-arc" cx="22" cy="22" r="18" stroke="#c69a4b" stroke-dasharray="59 54"/><text class="sci-emoji" x="14.8" y="28.1">💊</text></svg>
-    <div class="nutrient-label">VITAMIN B12<br><small><span style="color:#c69a4b">52%</span> of daily value</small></div>
-  </div>
-  <div class="nutrient-stat">
-    <svg class="nutrient-circle" width="80" height="80" viewBox="0 0 44 44"><circle class="sci-track" cx="22" cy="22" r="18"/><circle class="sci-arc" cx="22" cy="22" r="18" stroke="#6f8f76" stroke-dasharray="33 80"/><text class="sci-emoji" x="16.1" y="28.1">🦴</text></svg>
-    <div class="nutrient-label">MAGNESIUM<br><small><span style="color:#6f8f76">29%</span> of daily value</small></div>
-  </div>
-</div>
-
 <!-- PROBLEM / SCIENCE -->
 <section id="science" class="section science-section">
   <div class="section-inner science-inner">
@@ -411,7 +387,14 @@
       </div>
     </div>
     <div class="sci-chart">
-      <img src="images/ingredients.png" alt="Anchor ingredients" class="sci-image">
+      <p class="chart-title">Typical intake on peptide therapy vs daily requirement</p>
+      <div class="bars" id="bars">
+        <div class="bar-row" data-fill="38"><span>Protein</span><div class="bar"><i></i></div><strong>38%</strong></div>
+        <div class="bar-row" data-fill="31"><span>Fiber</span><div class="bar"><i></i></div><strong>31%</strong></div>
+        <div class="bar-row" data-fill="44"><span>Potassium</span><div class="bar"><i></i></div><strong>44%</strong></div>
+        <div class="bar-row" data-fill="52"><span>Vitamin B12</span><div class="bar"><i></i></div><strong>52%</strong></div>
+        <div class="bar-row" data-fill="29"><span>Magnesium</span><div class="bar"><i></i></div><strong>29%</strong></div>
+      </div>
     </div>
   </div>
 </section>
