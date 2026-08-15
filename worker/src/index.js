@@ -1,7 +1,7 @@
 const PRICE_IDS = {
-  'gi': 'price_1U1uzAP9xRSWM27tRI5UmsOT',
-  'mg': 'price_1U1uzBP9xRSWM27tPDa7aVSN',
-  'cp': 'price_1U1uzCP9xRSWM27tr3MnkyN8',
+  'gi': 'price_1U4WcrP9xRSWM27tbkVxcVak',
+  'mg': 'price_1U4WctP9xRSWM27tuKxkhNIh',
+  'cp': 'price_1U4WcsP9xRSWM27tg7zedsCp',
   'bundle-once': 'price_1U1uzDP9xRSWM27tiBJaiFv6',
   'bundle-sub': 'price_1U1uzBP9xRSWM27tP3E6nvG9',
 };

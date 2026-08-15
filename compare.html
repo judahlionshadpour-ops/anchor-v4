@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare Anchor Products | Anchor Nutrition</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.compare-hero {
+  background: #131920;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+.compare-hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: white;
+}
+.compare-hero p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.8);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.compare-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.compare-tab {
+  padding: 12px 24px;
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s;
+}
+.compare-tab.active {
+  background: #131920;
+  color: white;
+  border-color: #131920;
+}
+.compare-tab:hover {
+  border-color: #131920;
+}
+
+.compare-section {
+  display: none;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.compare-section.active {
+  display: block;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-bottom: 40px;
+}
+.compare-table th {
+  background: #131920;
+  color: white;
+  padding: 20px;
+  text-align: left;
+  font-weight: 600;
+}
+.compare-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.compare-table tr:hover {
+  background: #f9f9f9;
+}
+.check {
+  color: #28a745;
+  font-weight: 600;
+  font-size: 18px;
+}
+.xmark {
+  color: #999;
+  font-weight: 600;
+  font-size: 18px;
+}
+.comparison-value {
+  background: #ffc107;
+  font-weight: 600;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pricing-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+.price-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.price-card.featured {
+  border-color: #131920;
+  background: #fafafa;
+}
+.price-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #131920;
+}
+.price-big {
+  font-size: 32px;
+  font-weight: 700;
+  color: #131920;
+  margin: 10px 0;
+}
+.price-small {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 15px;
+}
+.savings {
+  background: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.content-breakdown {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.breakdown-item {
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.breakdown-item:last-child {
+  border-bottom: none;
+}
+.breakdown-item h4 {
+  font-size: 16px;
+  color: #131920;
+  margin: 0;
+}
+.breakdown-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .compare-tabs {
+    flex-direction: column;
+  }
+  .compare-table th {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .compare-table td {
+    padding: 10px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="compare-hero">
+  <h1>Compare Anchor</h1>
+  <p>Find the right stack for your peptide journey. See which option gives you the best value.</p>
+</div>
+
+<!-- Tabs -->
+<div class="compare-tabs">
+  <button class="compare-tab active" onclick="switchTab('option1')">Individual vs Bundle</button>
+  <button class="compare-tab" onclick="switchTab('option2')">Product Features</button>
+  <button class="compare-tab" onclick="switchTab('option3')">DIY vs Anchor</button>
+</div>
+
+<!-- OPTION 1: Individual vs System Bundle -->
+<div class="compare-section option1 active">
+  <h2 style="text-align: center; margin-bottom: 30px; color: #131920;">Individual Boxes vs System Bundle</h2>
+  
+  <div class="pricing-comparison">
+    <div class="price-card">
+      <h3>Buy Individual</h3>
+      <div class="price-small">One-time purchase</div>
+      <div class="price-big">$169.97</div>
+      <div class="price-small">GI Relief ($49.99) + Muscle Guard ($69.99) + Complete ($49.99)</div>
+    </div>
+    
+    <div class="price-card featured">
+      <div class="savings">SAVE 29%</div>
+      <h3>System Bundle</h3>
+      <div class="price-small">Monthly subscription</div>
+      <div class="price-big">$119.99</div>
+      <div class="price-small">All 3 formulas every month</div>
+    </div>
+  </div>
+
+  <div class="comparison-value">
+    <strong>Save $49.98/month vs buying individual boxes monthly</strong>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th style="text-align: center;">Individual Boxes</th>
+        <th style="text-align: center;">System Bundle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Free Shipping</strong></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+      </tr>
+      <tr>
+        <td><strong>90-Day Money Back</strong></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+      </tr>
+      <tr>
+        <td><strong>Auto-Renew (editable)</strong></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+      </tr>
+      <tr>
+        <td><strong>Pause/Cancel Anytime</strong></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+      </tr>
+      <tr>
+        <td><strong>Welcome Gift ($15 Shaker)</strong></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+      </tr>
+      <tr>
+        <td><strong>Monthly Cost</strong></td>
+        <td style="text-align: center;"><strong>$169.97</strong></td>
+        <td style="text-align: center;"><strong style="color: #28a745;">$119.99</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- OPTION 2: Product Features -->
+<div class="compare-section option2">
+  <h2 style="text-align: center; margin-bottom: 30px; color: #131920;">Choose Your Formula</h2>
+  
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th style="text-align: center;">GI Relief</th>
+        <th style="text-align: center;">Muscle Guard</th>
+        <th style="text-align: center;">Complete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Primary Purpose</strong></td>
+        <td>Reduce nausea & bloating</td>
+        <td>Preserve lean muscle</td>
+        <td>Fill nutrient gaps</td>
+      </tr>
+      <tr>
+        <td><strong>Key Ingredients</strong></td>
+        <td>Ginger, peppermint, soluble fiber, electrolytes</td>
+        <td>Whey protein, amino acids, creatine, leucine</td>
+        <td>Vitamins, minerals, B12, D3, sodium</td>
+      </tr>
+      <tr>
+        <td><strong>Best For</strong></td>
+        <td>Nausea & digestive comfort</td>
+        <td>Muscle preservation during weight loss</td>
+        <td>Baseline micronutrient coverage</td>
+      </tr>
+      <tr>
+        <td><strong>Protein per serving</strong></td>
+        <td style="text-align: center;"><span class="xmark">−</span></td>
+        <td style="text-align: center;">20g</td>
+        <td style="text-align: center;"><span class="xmark">−</span></td>
+      </tr>
+      <tr>
+        <td><strong>Creatine included</strong></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+      </tr>
+      <tr>
+        <td><strong>Electrolytes</strong></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+        <td style="text-align: center;"><span class="xmark">✗</span></td>
+        <td style="text-align: center;"><span class="check">✓</span></td>
+      </tr>
+      <tr>
+        <td><strong>Price per box</strong></td>
+        <td style="text-align: center;"><strong>$49.99</strong></td>
+        <td style="text-align: center;"><strong>$69.99</strong></td>
+        <td style="text-align: center;"><strong>$49.99</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background: #f5f5f5; padding: 30px; border-radius: 12px; margin-top: 30px;">
+    <h3 style="color: #131920; margin-bottom: 15px;">💡 Pro Tip: Stack Them</h3>
+    <p style="color: #666; margin: 0;">Most users benefit from all three. GI Relief handles digestion, Muscle Guard preserves muscle, and Complete covers micronutrients. Get all three in the System Bundle for the best coverage.</p>
+  </div>
+</div>
+
+<!-- OPTION 3: DIY vs Anchor -->
+<div class="compare-section option3">
+  <h2 style="text-align: center; margin-bottom: 30px; color: #131920;">DIY Supplementing vs Anchor System</h2>
+  
+  <div class="pricing-comparison">
+    <div class="price-card">
+      <h3>Buy Separately</h3>
+      <div class="price-small">Average monthly cost</div>
+      <div class="price-big">$180+</div>
+      <div class="price-small">Quality varies, research burden</div>
+    </div>
+    
+    <div class="price-card featured">
+      <div class="savings">SAVE 33%</div>
+      <h3>Anchor Bundle</h3>
+      <div class="price-small">Clinically dosed formula</div>
+      <div class="price-big">$119.99</div>
+      <div class="price-small">All 3 optimized together</div>
+    </div>
+  </div>
+
+  <div class="content-breakdown">
+    <div class="breakdown-item">
+      <div>
+        <h4>Digestive Support</h4>
+        <p>Ginger, peppermint, soluble fiber, electrolytes</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">DIY: $30-40</div>
+        <div style="font-weight: 600; color: #28a745;">Included</div>
+      </div>
+    </div>
+    <div class="breakdown-item">
+      <div>
+        <h4>Protein & Muscle Support</h4>
+        <p>Whey protein, amino acids, creatine monohydrate, leucine</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">DIY: $40-50</div>
+        <div style="font-weight: 600; color: #28a745;">Included</div>
+      </div>
+    </div>
+    <div class="breakdown-item">
+      <div>
+        <h4>Multivitamin & Minerals</h4>
+        <p>B12, D3, sodium, zinc, magnesium, iron, calcium</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">DIY: $20-30</div>
+        <div style="font-weight: 600; color: #28a745;">Included</div>
+      </div>
+    </div>
+    <div class="breakdown-item">
+      <div>
+        <h4>Convenience Factor</h4>
+        <p>One daily routine vs 5-7 separate supplements</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">DIY: Hours researching</div>
+        <div style="font-weight: 600; color: #28a745;">Done for you</div>
+      </div>
+    </div>
+    <div class="breakdown-item" style="background: #f5f5f5;">
+      <div>
+        <h4 style="font-size: 18px;">TOTAL MONTHLY</h4>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 18px; font-weight: 700; color: #333; margin-bottom: 5px;">$180+</div>
+        <div style="font-size: 18px; font-weight: 700; color: #28a745;">$119.99</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison-value">
+    <strong>Save $60/month + eliminate research burden</strong>
+  </div>
+
+  <div style="background: #131920; color: white; padding: 30px; border-radius: 12px; margin-top: 30px; text-align: center;">
+    <h3 style="color: white; margin-bottom: 10px;">Why Anchor?</h3>
+    <ul style="text-align: left; max-width: 500px; margin: 0 auto; list-style: none; padding: 0;">
+      <li style="padding: 8px 0;">✓ Formulated specifically for peptide therapy users</li>
+      <li style="padding: 8px 0;">✓ Clinically dosed ingredients (no proprietary blends)</li>
+      <li style="padding: 8px 0;">✓ Third-party tested for purity & potency</li>
+      <li style="padding: 8px 0;">✓ 90-day money-back guarantee</li>
+      <li style="padding: 8px 0;">✓ Pause or cancel anytime</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+function switchTab(tab) {
+  // Hide all sections
+  document.querySelectorAll('.compare-section').forEach(el => {
+    el.classList.remove('active');
+  });
+  
+  // Remove active from all tabs
+  document.querySelectorAll('.compare-tab').forEach(el => {
+    el.classList.remove('active');
+  });
+  
+  // Show selected section
+  document.querySelector('.option' + tab.slice(-1)).classList.add('active');
+  
+  // Mark clicked tab as active
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
