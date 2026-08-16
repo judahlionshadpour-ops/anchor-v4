@@ -53,7 +53,7 @@ export default {
 
     const params = new URLSearchParams();
     params.set('mode', mode);
-    params.set('success_url', base + 'index.html?checkout=success');
+    params.set('success_url', base + 'success.html');
     params.set('cancel_url', base + 'index.html?checkout=cancelled');
     params.set('shipping_address_collection[allowed_countries][0]', 'US');
     params.set('phone_number_collection[enabled]', 'true');
