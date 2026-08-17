@@ -530,7 +530,7 @@ body.theme-light .protocol-section { background: #fff; }
 .reel-carousel {
   display: flex;
   width: max-content;
-  animation: reelScroll 28s linear infinite;
+  animation: reelScroll 63s linear infinite;
 }
 @keyframes reelScroll {
   0% { transform: translateX(0); }
@@ -544,7 +544,8 @@ body.theme-light .protocol-section { background: #fff; }
   position: relative;
   box-shadow: 0 16px 48px rgba(0,0,0,.35);
 }
-.reel-inner img {
+.reel-inner img,
+.reel-inner video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -563,7 +564,8 @@ body.theme-light .protocol-section { background: #fff; }
   padding: .75rem .6rem .7rem;
 }
 .reel-top-bar { display: flex; align-items: center; gap: .4rem; }
-.reel-av { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #fff; flex-shrink: 0; }
+.reel-av { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #fff; flex-shrink: 0;
+  background-size: cover; background-position: center top; background-repeat: no-repeat; }
 .reel-top-bar span { color: #fff; font-family: -apple-system, sans-serif; font-size: .6rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; }
 .reel-follow { color: #fff; font-family: -apple-system, sans-serif; font-size: .58rem; font-weight: 700; border: 1px solid rgba(255,255,255,.7); border-radius: 4px; padding: .1rem .35rem; margin-left: auto; flex-shrink: 0; max-width: unset !important; }
 .reel-play-btn {
@@ -587,17 +589,49 @@ body.theme-light .protocol-section { background: #fff; }
 .reel-prog div { height: 100%; background: #fff; border-radius: 100px; }
 .reel-side-actions {
   position: absolute;
-  right: .5rem;
-  bottom: 3rem;
+  right: .38rem;
+  bottom: 2.6rem;
   z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: .8rem;
+  gap: .62rem;
   align-items: center;
 }
-.reel-side-actions div { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
-.reel-side-actions span:first-child { font-size: 1.1rem; }
-.reel-side-actions span:last-child { color: #fff; font-family: -apple-system, sans-serif; font-size: .52rem; font-weight: 600; }
+/* real Reels rail: thin white outline glyph, tight count beneath, soft drop shadow */
+.reel-side-actions button {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .12rem;
+  color: #fff;
+  cursor: default;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
+}
+.reel-side-actions .ra-ico { display: block; width: 17px; height: 17px; }
+.reel-side-actions .ra-ico svg { width: 100%; height: 100%; display: block; }
+.reel-side-actions .ra-n {
+  color: #fff;
+  font-family: -apple-system, sans-serif;
+  font-size: .46rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  line-height: 1;
+}
+.reel-side-actions .ra-more {
+  display: block; width: 15px; height: 15px; color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
+  margin-top: .05rem;
+}
+.reel-side-actions .ra-more svg { width: 100%; height: 100%; display: block; }
+/* rotating audio/profile thumbnail that sits at the bottom of the rail */
+.reel-side-actions .ra-audio {
+  width: 17px; height: 17px; border-radius: 5px;
+  border: 1.2px solid rgba(255,255,255,.85);
+  background: linear-gradient(135deg, #3a6147 0%, #8a6030 55%, #42618c 100%);
+  box-shadow: 0 1px 3px rgba(0,0,0,.5);
+  margin-top: .1rem;
+}
 
 /* ===== REVIEWS ===== */
 .reviews-section { background: var(--cream); overflow: hidden; }
