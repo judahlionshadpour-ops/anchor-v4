@@ -257,7 +257,7 @@
   <div class="hero-visual hero-visual-dark">
     <div class="hero-duo">
       <div class="hero-main-photo">
-        <video src="videos/hero-glass.mp4" autoplay muted loop playsinline preload="auto"></video>
+        <video src="videos/hero-glass.mp4" poster="images/hero-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
         <span class="hero-badge">3 formulas · 1 system</span>
       </div>
       <div class="hero-inset-photo">
@@ -849,7 +849,7 @@
   });
 })();
 
-/* ===== HERO VIDEO (robust autoplay w/ retry) ===== */
+/* ===== HERO VIDEO (robust autoplay w/ retry + gesture fallback) ===== */
 (function () {
   const hero = document.querySelector('.hero-main-photo video');
   if (!hero) return;
@@ -862,6 +862,18 @@
     }, { threshold: .1 }).observe(hero);
   }
   document.addEventListener('visibilitychange', () => { if (!document.hidden) safePlay(); });
+
+  // iOS Low Power Mode / "Never Auto-Play" website settings block autoplay
+  // outright with no JS override. A play() called from a real user gesture
+  // is exempt from both, so start it on the very first tap/scroll/keypress
+  // anywhere on the page as a guaranteed fallback.
+  function gestureKick() {
+    safePlay();
+    ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'].forEach(evt =>
+      document.removeEventListener(evt, gestureKick));
+  }
+  ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'].forEach(evt =>
+    document.addEventListener(evt, gestureKick, { once: true, passive: true }));
 })();
 
 /* ===== NAV SHADOW ===== */
