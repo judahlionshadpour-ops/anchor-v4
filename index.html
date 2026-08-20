@@ -257,7 +257,7 @@
   <div class="hero-visual hero-visual-dark">
     <div class="hero-duo">
       <div class="hero-main-photo">
-        <video src="videos/hero-glass.mp4" autoplay muted loop playsinline></video>
+        <video src="videos/hero-glass.mp4" autoplay muted loop playsinline preload="auto"></video>
         <span class="hero-badge">3 formulas · 1 system</span>
       </div>
       <div class="hero-inset-photo">
@@ -855,10 +855,26 @@
 (function () {
   const wrap = document.getElementById('protocolTabs');
   if (!wrap) return;
-  // Autoplay initial active video
-  document.querySelectorAll('[data-phase-img].active').forEach(el => {
-    if (el.tagName === 'VIDEO') el.play();
-  });
+  function safePlay(el) {
+    if (!el || el.tagName !== 'VIDEO') return;
+    const attempt = () => { if (el.paused) el.play().catch(() => {}); };
+    if (el.readyState >= 2) attempt();
+    else el.addEventListener('loadeddata', attempt, { once: true });
+  }
+  const activeVideo = document.querySelector('[data-phase-img].active');
+  safePlay(activeVideo);
+  if ('IntersectionObserver' in window) {
+    document.querySelectorAll('[data-phase-img]').forEach(el => {
+      if (el.tagName !== 'VIDEO') return;
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!el.classList.contains('active')) return;
+          if (e.isIntersecting) safePlay(el);
+          else if (!el.paused) el.pause();
+        });
+      }, { threshold: .3 }).observe(el);
+    });
+  }
   wrap.addEventListener('click', (e) => {
     const tab = e.target.closest('.protocol-tab');
     if (!tab) return;
@@ -868,9 +884,24 @@
     document.querySelectorAll('[data-phase-img]').forEach(el => {
       const isActive = el.dataset.phaseImg === phase;
       el.classList.toggle('active', isActive);
-      if (el.tagName === 'VIDEO') { if (isActive) { el.play(); } else { el.pause(); } }
+      if (el.tagName === 'VIDEO') { if (isActive) { safePlay(el); } else { el.pause(); } }
     });
   });
+})();
+
+/* ===== HERO VIDEO (robust autoplay w/ retry) ===== */
+(function () {
+  const hero = document.querySelector('.hero-main-photo video');
+  if (!hero) return;
+  function safePlay() { if (hero.paused) hero.play().catch(() => {}); }
+  if (hero.readyState >= 2) safePlay();
+  else hero.addEventListener('loadeddata', safePlay, { once: true });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) safePlay(); });
+    }, { threshold: .1 }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) safePlay(); });
 })();
 
 /* ===== NAV SHADOW ===== */
