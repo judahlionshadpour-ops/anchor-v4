@@ -823,6 +823,8 @@
    guaranteed fallback — plays every currently-paused one on the very first
    real tap/click/keydown anywhere on the page. */
 (function () {
+  // Deferred variant — fine for the initial, non-gesture page-load attempt
+  // (native autoplay eligibility already decided by the browser here).
   function safePlay(el) {
     if (!el || el.tagName !== 'VIDEO' || !el.paused) return;
     const attempt = () => { if (el.paused) el.play().catch(() => {}); };
@@ -830,6 +832,19 @@
     else el.addEventListener('loadeddata', attempt, { once: true });
   }
   window.__anchorSafePlay = safePlay;
+
+  // Synchronous variant for gesture handlers — WebKit only counts a play()
+  // call as gesture-activated if it happens synchronously inside the event
+  // handler itself. Deferring it to a later 'loadeddata' callback (even one
+  // registered during the same tap) loses that activation on iOS Safari,
+  // even though Chrome/Android tolerate it. So this must call .play()
+  // directly, right now, regardless of buffering state — the browser
+  // buffers internally and starts once ready, but the gesture-consent is
+  // captured at call time either way.
+  function gesturePlay(el) {
+    if (el && el.tagName === 'VIDEO' && el.paused) el.play().catch(() => {});
+  }
+  window.__anchorGesturePlay = gesturePlay;
 
   function autoplayTargets() {
     return document.querySelectorAll(
@@ -855,7 +870,7 @@
   });
 
   function gestureKick() {
-    autoplayTargets().forEach(safePlay);
+    autoplayTargets().forEach(gesturePlay);
   }
   ['pointerdown', 'touchend', 'click', 'keydown'].forEach(evt =>
     document.addEventListener(evt, gestureKick, { passive: true }));
@@ -874,7 +889,7 @@
     document.querySelectorAll('[data-phase-img]').forEach(el => {
       const isActive = el.dataset.phaseImg === phase;
       el.classList.toggle('active', isActive);
-      if (el.tagName === 'VIDEO') { if (isActive) { window.__anchorSafePlay(el); } else { el.pause(); } }
+      if (el.tagName === 'VIDEO') { if (isActive) { window.__anchorGesturePlay(el); } else { el.pause(); } }
     });
   });
 })();
