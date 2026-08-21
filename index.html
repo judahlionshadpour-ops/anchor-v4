@@ -811,30 +811,60 @@
 </div>
 
 <script>
-/* ===== PROTOCOL TABS (with video support) ===== */
+/* ===== SITE-WIDE AUTOPLAY (readiness-gated + visibility + gesture unlock) =====
+   iOS Low Power Mode and Safari's "Never Auto-Play" website setting both
+   block autoplay outright, no JS override possible. A play() made inside a
+   real, discrete user gesture (tap/click/keydown — NOT scroll, which iOS
+   does not count as activation) is exempt from both. WebKit's user-activation
+   flag is page-level: once any play() succeeds inside that gesture, every
+   other video on the page is free to autoplay programmatically too. So this
+   registers ALL autoplay-intended videos up front, retries each once it has
+   data, keeps them paused off-screen / playing on-screen, and — as the
+   guaranteed fallback — plays every currently-paused one on the very first
+   real tap/click/keydown anywhere on the page. */
 (function () {
-  const wrap = document.getElementById('protocolTabs');
-  if (!wrap) return;
   function safePlay(el) {
-    if (!el || el.tagName !== 'VIDEO') return;
+    if (!el || el.tagName !== 'VIDEO' || !el.paused) return;
     const attempt = () => { if (el.paused) el.play().catch(() => {}); };
     if (el.readyState >= 2) attempt();
     else el.addEventListener('loadeddata', attempt, { once: true });
   }
-  const activeVideo = document.querySelector('[data-phase-img].active');
-  safePlay(activeVideo);
+  window.__anchorSafePlay = safePlay;
+
+  function autoplayTargets() {
+    return document.querySelectorAll(
+      '.hero-main-photo video, [data-phase-img].active, .reel-carousel video'
+    );
+  }
+
+  autoplayTargets().forEach(safePlay);
+
   if ('IntersectionObserver' in window) {
-    document.querySelectorAll('[data-phase-img]').forEach(el => {
-      if (el.tagName !== 'VIDEO') return;
+    autoplayTargets().forEach(el => {
       new IntersectionObserver((entries) => {
         entries.forEach(e => {
-          if (!el.classList.contains('active')) return;
           if (e.isIntersecting) safePlay(el);
           else if (!el.paused) el.pause();
         });
-      }, { threshold: .3 }).observe(el);
+      }, { threshold: .15 }).observe(el);
     });
   }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) autoplayTargets().forEach(safePlay);
+  });
+
+  function gestureKick() {
+    autoplayTargets().forEach(safePlay);
+  }
+  ['pointerdown', 'touchend', 'click', 'keydown'].forEach(evt =>
+    document.addEventListener(evt, gestureKick, { passive: true }));
+})();
+
+/* ===== PROTOCOL TABS (tab switching) ===== */
+(function () {
+  const wrap = document.getElementById('protocolTabs');
+  if (!wrap) return;
   wrap.addEventListener('click', (e) => {
     const tab = e.target.closest('.protocol-tab');
     if (!tab) return;
@@ -844,36 +874,9 @@
     document.querySelectorAll('[data-phase-img]').forEach(el => {
       const isActive = el.dataset.phaseImg === phase;
       el.classList.toggle('active', isActive);
-      if (el.tagName === 'VIDEO') { if (isActive) { safePlay(el); } else { el.pause(); } }
+      if (el.tagName === 'VIDEO') { if (isActive) { window.__anchorSafePlay(el); } else { el.pause(); } }
     });
   });
-})();
-
-/* ===== HERO VIDEO (robust autoplay w/ retry + gesture fallback) ===== */
-(function () {
-  const hero = document.querySelector('.hero-main-photo video');
-  if (!hero) return;
-  function safePlay() { if (hero.paused) hero.play().catch(() => {}); }
-  if (hero.readyState >= 2) safePlay();
-  else hero.addEventListener('loadeddata', safePlay, { once: true });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) safePlay(); });
-    }, { threshold: .1 }).observe(hero);
-  }
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) safePlay(); });
-
-  // iOS Low Power Mode / "Never Auto-Play" website settings block autoplay
-  // outright with no JS override. A play() called from a real user gesture
-  // is exempt from both, so start it on the very first tap/scroll/keypress
-  // anywhere on the page as a guaranteed fallback.
-  function gestureKick() {
-    safePlay();
-    ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'].forEach(evt =>
-      document.removeEventListener(evt, gestureKick));
-  }
-  ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'].forEach(evt =>
-    document.addEventListener(evt, gestureKick, { once: true, passive: true }));
 })();
 
 /* ===== NAV SHADOW ===== */
